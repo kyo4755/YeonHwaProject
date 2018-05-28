@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">내 손 안에 병원</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_hospital">병원 찾기</string>
+    <string name="menu_pharmacy">약국 찾기</string>
+    <string name="menu_drugs">약 검색</string>
+    <string name="menu_setting">설정</string>
+</resources>
