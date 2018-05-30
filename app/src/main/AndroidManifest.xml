@@ -38,6 +38,14 @@
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity
+            android:name=".LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".RegisterActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
             android:name=".DetailActivity.FindDetailActivity"
             android:theme="@style/AppTheme.NoActionBar"
             tools:ignore="InnerclassSeparator" />

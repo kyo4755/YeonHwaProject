@@ -1,5 +1,6 @@
 package com.dongyang.yeonhwaproject;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -15,6 +16,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
@@ -29,6 +32,7 @@ public class MainActivity extends AppCompatActivity
     public RequestManager glideManager;
 
     LinearLayout findHospital, findPharmacy, findDrugs, settings;
+    TextView login_btn, register_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +64,6 @@ public class MainActivity extends AppCompatActivity
 
         View header = navigationView.getHeaderView(0);
         final ImageView drawer_user_image = header.findViewById(R.id.drawer_user_image);
-
         drawer_user_image.post(new Runnable() {
             @Override
             public void run() {
@@ -76,10 +79,16 @@ public class MainActivity extends AppCompatActivity
         findDrugs = findViewById(R.id.main_find_drugs);
         settings = findViewById(R.id.main_settings);
 
+        login_btn = header.findViewById(R.id.drawer_login_btn);
+        register_btn = header.findViewById(R.id.drawer_register_btn);
+
         findHospital.setOnClickListener(this);
         findPharmacy.setOnClickListener(this);
         findDrugs.setOnClickListener(this);
         settings.setOnClickListener(this);
+
+        login_btn.setOnClickListener(this);
+        register_btn.setOnClickListener(this);
     }
 
     @Override
@@ -157,6 +166,12 @@ public class MainActivity extends AppCompatActivity
             case R.id.main_settings :
                 SettingsClickListener();
                 break;
+            case R.id.drawer_login_btn:
+                LoginBtnClickListener();
+                break;
+            case R.id.drawer_register_btn:
+                RegisterBtnClickListener();
+                break;
         }
         overridePendingTransition(R.anim.right_in_animation, R.anim.not_move_animation);
     }
@@ -172,12 +187,26 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void findDrugsClickListener() {
-        Intent it = new Intent(MainActivity.this, FindActivity.class);
-        startActivity(it);
+//        Intent it = new Intent(MainActivity.this, FindActivity.class);
+//        startActivity(it);
     }
 
     private void SettingsClickListener() {
         Intent it = new Intent(MainActivity.this, SettingActivity.class);
         startActivity(it);
+    }
+
+    private void LoginBtnClickListener(){
+        Intent it = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(it);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+    }
+
+    private void RegisterBtnClickListener(){
+        Intent it = new Intent(MainActivity.this, RegisterActivity.class);
+        startActivity(it);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
     }
 }
