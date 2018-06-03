@@ -23,6 +23,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.dongyang.yeonhwaproject.FindFragment.FindDrugsActivity;
 import com.dongyang.yeonhwaproject.FindFragment.FindHospitalActivity;
+import com.dongyang.yeonhwaproject.FindFragment.FindPharmacyActivity;
 
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
@@ -182,13 +183,13 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void findPharmacyClickListener() {
-//        Intent it = new Intent(MainActivity.this, FindActivity.class);
-//        startActivity(it);
+        Intent it = new Intent(MainActivity.this, FindActivity.class);
+        startActivity(it);
     }
 
     private void findDrugsClickListener() {
-//        Intent it = new Intent(MainActivity.this, FindActivity.class);
-//        startActivity(it);
+        Intent it = new Intent(MainActivity.this, FindDrugsActivity.class);
+        startActivity(it);
     }
 
     private void SettingsClickListener() {

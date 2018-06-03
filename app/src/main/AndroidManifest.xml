@@ -34,8 +34,8 @@
 
         <activity
             android:name=".FindActivity"
-            tools:ignore="InnerclassSeparator"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="InnerclassSeparator"/>
 
         <activity
             android:name=".SettingActivity"
@@ -53,6 +53,11 @@
             android:name=".DetailActivity.FindDetailActivity"
             android:theme="@style/AppTheme.NoActionBar"
             tools:ignore="InnerclassSeparator" />
+
+        <activity
+            android:name=".FindFragment.FindDrugsActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="InnerclassSeparator"/>
 
     </application>
 
