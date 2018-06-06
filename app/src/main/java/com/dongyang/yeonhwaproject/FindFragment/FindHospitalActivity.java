@@ -14,6 +14,13 @@ import com.dongyang.yeonhwaproject.DetailActivity.FindDetailActivity;
 import com.dongyang.yeonhwaproject.POJO.FindPOJO;
 import com.dongyang.yeonhwaproject.R;
 
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
+
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.ArrayList;
 
 /**

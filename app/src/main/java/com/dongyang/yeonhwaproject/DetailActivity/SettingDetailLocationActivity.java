@@ -14,11 +14,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dongyang.yeonhwaproject.R;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
@@ -33,6 +35,8 @@ public class SettingDetailLocationActivity extends AppCompatActivity implements 
     TextView location_default, location_detail;
 
     Geocoder geocoder;
+    GoogleMap mGoogleMap;
+    private Marker currentMarker = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +65,10 @@ public class SettingDetailLocationActivity extends AppCompatActivity implements 
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        mGoogleMap = googleMap;
+
+        setDefaultLocation();
+
         Intent it = getIntent();
         double lat = it.getDoubleExtra("lat", 37.56);
         double lon = it.getDoubleExtra("lon", 126.97);
@@ -83,6 +91,7 @@ public class SettingDetailLocationActivity extends AppCompatActivity implements 
             if(list.size() == 0){
                 Toast.makeText(this, "해당되는 주소 정보는 없습니다.", Toast.LENGTH_SHORT).show();
             } else {
+
                 Address address = list.get(0);
                 locality = address.getLocality();
                 thoroughFare = address.getThoroughfare();
@@ -107,12 +116,31 @@ public class SettingDetailLocationActivity extends AppCompatActivity implements 
 
         }
 
-
-
     }
 
     private void finishActivity() {
         finish();
         overridePendingTransition(R.anim.not_move_animation, R.anim.right_out_animation);
+    }
+
+    public void setDefaultLocation() {
+
+        //디폴트 위치, Seoul
+        LatLng DEFAULT_LOCATION = new LatLng(37.56, 126.97);
+        String markerTitle = "위치정보 가져올 수 없음";
+        String markerSnippet = "위치 퍼미션과 GPS 활성 여부 확인하세요";
+
+        if(currentMarker != null) currentMarker.remove();
+
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(DEFAULT_LOCATION);
+        markerOptions.title(markerTitle);
+        markerOptions.snippet(markerSnippet);
+        markerOptions.draggable(true);
+        currentMarker = mGoogleMap.addMarker(markerOptions);
+
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(DEFAULT_LOCATION, 15);
+        mGoogleMap.moveCamera(cameraUpdate);
+
     }
 }
