@@ -179,11 +179,13 @@ public class MainActivity extends AppCompatActivity
 
     private void findHospitalClickListener() {
         Intent it = new Intent(MainActivity.this, FindActivity.class);
+        it.putExtra("tabCount", 0);
         startActivity(it);
     }
 
     private void findPharmacyClickListener() {
         Intent it = new Intent(MainActivity.this, FindActivity.class);
+        it.putExtra("tabCount", 1);
         startActivity(it);
     }
 

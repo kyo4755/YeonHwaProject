@@ -11,6 +11,8 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/find_pharmacy_listview"/>
+        android:id="@+id/find_pharmacy_listview"
+        android:nestedScrollingEnabled="true"
+        tools:targetApi="lollipop"/>
 
 </android.support.v4.widget.NestedScrollView>

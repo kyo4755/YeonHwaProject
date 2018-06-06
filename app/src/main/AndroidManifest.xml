@@ -4,6 +4,7 @@
     package="com.dongyang.yeonhwaproject">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
         android:allowBackup="true"
@@ -58,6 +59,15 @@
             android:name=".FindFragment.FindDrugsActivity"
             android:theme="@style/AppTheme.NoActionBar"
             tools:ignore="InnerclassSeparator"/>
+
+        <activity
+            android:name=".SettingLocationActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity
+            android:name=".DetailActivity.SettingDetailLocationActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="InnerclassSeparator" />
 
     </application>
 

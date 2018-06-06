@@ -1,5 +1,9 @@
 package com.dongyang.yeonhwaproject;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -7,8 +11,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 import com.dongyang.yeonhwaproject.Adapter.FindTabPagerAdapter;
+import com.dongyang.yeonhwaproject.GPS.GPSInfo;
 
 /**
  * Created by Kim Jong-Hwa on 2018-05-27.
@@ -16,21 +22,21 @@ import com.dongyang.yeonhwaproject.Adapter.FindTabPagerAdapter;
 
 public class FindActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private Toolbar toolbar;
-    private TabLayout tabLayout;
     private ViewPager viewPager;
-    private ImageButton back_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.find_main);
 
-        toolbar = findViewById(R.id.toolbar_find_hp);
+        Intent it = getIntent();
+        int tabCount = it.getIntExtra("tabCount", 0);
+
+        Toolbar toolbar = findViewById(R.id.toolbar_find_hp);
         toolbar.setTitleTextColor(getResources().getColor(R.color.black));
         setSupportActionBar(toolbar);
 
-        tabLayout = findViewById(R.id.find_toolbar_tab);
+        TabLayout tabLayout = findViewById(R.id.find_toolbar_tab);
         tabLayout.addTab(tabLayout.newTab().setText("병원").setIcon(R.drawable.tab_hostpital));
         tabLayout.addTab(tabLayout.newTab().setText("약국").setIcon(R.drawable.tab_pharmacy));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
@@ -39,6 +45,8 @@ public class FindActivity extends AppCompatActivity implements View.OnClickListe
 
         FindTabPagerAdapter pagerAdapter = new FindTabPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(pagerAdapter);
+        // intent로 받은 값에 따라 tablayout의 content를 변환
+        viewPager.setCurrentItem(tabCount);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -58,8 +66,11 @@ public class FindActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-        back_btn = findViewById(R.id.find_back_btn);
+        ImageButton back_btn = findViewById(R.id.find_back_btn);
         back_btn.setOnClickListener(this);
+
+        LinearLayout findLocation = findViewById(R.id.find_my_location);
+        findLocation.setOnClickListener(this);
     }
 
     @Override
@@ -67,6 +78,9 @@ public class FindActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()){
             case R.id.find_back_btn :
                 finishActivity();
+                break;
+            case R.id.find_my_location :
+                moveSettingLocationActivity();
                 break;
         }
     }
@@ -80,4 +94,12 @@ public class FindActivity extends AppCompatActivity implements View.OnClickListe
         finish();
         overridePendingTransition(R.anim.not_move_animation, R.anim.right_out_animation);
     }
+
+    private void moveSettingLocationActivity(){
+        Intent it = new Intent(FindActivity.this, SettingLocationActivity.class);
+        startActivity(it);
+        overridePendingTransition(R.anim.right_in_animation, R.anim.not_move_animation);
+    }
+
+
 }
