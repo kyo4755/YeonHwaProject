@@ -20,6 +20,7 @@
         android:singleLine="true"
         android:id="@+id/location_edittext"
         android:hint="도로명, 지번으로 검색하세요."
+        android:imeOptions="actionDone"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>

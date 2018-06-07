@@ -1,14 +1,19 @@
 package com.dongyang.yeonhwaproject;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.dongyang.yeonhwaproject.DetailActivity.SettingDetailLocationActivity;
 import com.dongyang.yeonhwaproject.GPS.GPSInfo;
@@ -19,25 +24,37 @@ import com.dongyang.yeonhwaproject.GPS.GPSInfo;
 
 public class SettingLocationActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private final int PERMISSIONS_ACCESS_FINE_LOCATION = 1000;
-    private final int PERMISSIONS_ACCESS_COARSE_LOCATION = 1001;
-
-    boolean isAccessFineLocation = false;
-    private boolean isAccessCoarseLocation = false;
-    private boolean isPermission = false;
-
-    private GPSInfo gpsInfo;
+    public static Activity settingLocationActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setting_location_main);
 
+        settingLocationActivity = SettingLocationActivity.this;
+
         ImageButton cancelBtn = findViewById(R.id.location_cancel);
         cancelBtn.setOnClickListener(this);
 
         LinearLayout myLocationSetting = findViewById(R.id.location_myloca_setting);
         myLocationSetting.setOnClickListener(this);
+
+        final EditText findLocaEdittext = findViewById(R.id.location_edittext);
+        findLocaEdittext.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                switch (actionId){
+                    case EditorInfo.IME_ACTION_DONE:
+                        if(findLocaEdittext.length() != 0){
+                            Intent it = new Intent(SettingLocationActivity.this, SettingDetailLocationActivity.class);
+                            it.putExtra("location", findLocaEdittext.getText().toString());
+                            startActivity(it);
+                        }
+                }
+
+                return true;
+            }
+        });
     }
 
     @Override
@@ -59,12 +76,7 @@ public class SettingLocationActivity extends AppCompatActivity implements View.O
 
     private void findLocationClickListener(){
 
-        if(!isPermission){
-            callPermission();
-            return;
-        }
-
-        gpsInfo = new GPSInfo(SettingLocationActivity.this);
+        GPSInfo gpsInfo = new GPSInfo(SettingLocationActivity.this);
 
         if(gpsInfo.isGetLocation()){
             double latitude = gpsInfo.getLat();
@@ -84,41 +96,5 @@ public class SettingLocationActivity extends AppCompatActivity implements View.O
         overridePendingTransition(R.anim.right_in_animation, R.anim.not_move_animation);
     }
 
-    private void callPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-                && checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
 
-            requestPermissions(
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    PERMISSIONS_ACCESS_FINE_LOCATION);
-
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-                && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED){
-
-            requestPermissions(
-                    new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
-                    PERMISSIONS_ACCESS_COARSE_LOCATION);
-        } else {
-            isPermission = true;
-            findLocationClickListener();
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[]grantResults){
-        if(requestCode == PERMISSIONS_ACCESS_FINE_LOCATION
-                && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-            isAccessFineLocation = true;
-        }
-        else if(requestCode == PERMISSIONS_ACCESS_COARSE_LOCATION
-                && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-            isAccessCoarseLocation = true;
-        }
-
-        if(isAccessFineLocation && isAccessCoarseLocation){
-            isPermission = true;
-        }
-    }
 }
