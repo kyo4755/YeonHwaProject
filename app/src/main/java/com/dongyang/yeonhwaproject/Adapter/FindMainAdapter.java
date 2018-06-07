@@ -20,24 +20,21 @@ import java.util.ArrayList;
 
 public class FindMainAdapter extends BaseAdapter {
 
-    ArrayList<FindPOJO> list = new ArrayList<>();
+    private ArrayList<FindPOJO> listViewItemList;
 
-    private class FindMainViewHolder{
-        public ImageView img;
-        public TextView name;
-        public ImageView star_img;
-        public TextView review_count;
-        public TextView distance;
+    public FindMainAdapter(ArrayList<FindPOJO> data) {
+        this.listViewItemList = data;
     }
+    public ArrayList<FindPOJO> getArItem(){return listViewItemList;}
 
     @Override
     public int getCount() {
-        return list.size();
+        return listViewItemList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return list.get(position);
+        return listViewItemList.get(position);
     }
 
     @Override
@@ -47,7 +44,21 @@ public class FindMainAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Context context = parent.getContext();
+
+
+        final int pos = position;
+        final Context context = parent.getContext();
+
+        if (convertView == null) {
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(R.layout.find_prefab, parent, false);
+        }
+        TextView name = convertView.findViewById(R.id.prefab_name);
+
+        FindPOJO listViewItem = listViewItemList.get(position);
+
+        name.setText(listViewItem.getName());
+/*        Context context = parent.getContext();
         FindMainViewHolder holder;
 
         if(convertView == null) {
@@ -79,11 +90,7 @@ public class FindMainAdapter extends BaseAdapter {
         else
             star_img = context.getResources().getDrawable(R.drawable.star_noncolor);
         holder.star_img.setImageDrawable(star_img);
-
+        */
         return convertView;
-    }
-
-    public void temp_data(ArrayList<FindPOJO> list){
-        this.list = list;
     }
 }
