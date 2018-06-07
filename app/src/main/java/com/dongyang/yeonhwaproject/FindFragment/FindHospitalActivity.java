@@ -112,30 +112,15 @@ public class FindHospitalActivity extends Fragment{
                         switch (eventType) {
                             case XmlPullParser.START_TAG:
                                 startTag = parser.getName();
-                                if (startTag.equals("item")) {
-                                    data  = new FindPOJO();
-                                }
-                                if (startTag.equals("dutyName")){
-                                    data.setName(parser.nextText());
-                                }
-                                if (startTag.equals("dutyAddr")){
-                                    data.setAddress(parser.nextText());
-                                }
-                                if (startTag.equals("dutyTel1")){
-                                    data.setTel(parser.nextText());
-                                }
-                                if (startTag.equals("latitude")){
-                                    data.setLat(parser.nextText());
-                                }
-                                if (startTag.equals("longitude")){
-                                    data.setLon(parser.nextText());
-                                }
+                                if (startTag.equals("item"))        data  = new FindPOJO();
+                                if (startTag.equals("dutyName"))    data.setName(parser.nextText());
+                                if (startTag.equals("dutyAddr"))    data.setAddress(parser.nextText());
+                                if (startTag.equals("dutyTel1"))    data.setTel(parser.nextText());
+                                if (startTag.equals("distance"))    data.setDistance(parser.nextText());
                                 break;
                             case XmlPullParser.END_TAG:
                                 endTag = parser.getName();
-                                if (endTag.equals("item")){
-                                    arrays.add(data);
-                                }
+                                if (endTag.equals("item"))          arrays.add(data);
                                 break;
                         }
                         eventType = parser.next();
@@ -168,5 +153,17 @@ public class FindHospitalActivity extends Fragment{
             }
         }
         return stringBuilder.toString();
+    }
+
+    private String safeNextText(XmlPullParser parser, String name)
+            throws XmlPullParserException, IOException {
+        parser.require(XmlPullParser.START_TAG, null, name);
+        String itemText = parser.nextText();
+        if (parser.getEventType() != XmlPullParser.END_TAG) {
+            parser.nextTag();
+        }
+        parser.require(XmlPullParser.END_TAG, null, name);
+        System.out.println("menu option: " + itemText);
+        return itemText;
     }
 }

@@ -120,36 +120,33 @@ public class SettingDetailLocationActivity extends AppCompatActivity implements 
             if(list.size() == 0){
                 Toast.makeText(this, "해당되는 주소 정보는 없습니다.", Toast.LENGTH_SHORT).show();
             } else {
-                String cut[] = list.get(0).toString().split(" ");
                 StringBuilder title = new StringBuilder();
-                String subTitle = "";
+                StringBuilder subTitle = new StringBuilder();
 
+                Address address = list.get(0);
 
-                if(cut.length == 6){
-                    for(int i=1; i<4; i++){
-                        title.append(cut[i]).append(" ");
-                    }
-                    String [] innerCut = cut[5].split("\"");
-                    subTitle = subTitle + cut[4] + " " + innerCut[0];
-                } else if(cut.length == 5) {
-                    for(int i=1; i<3; i++){
-                        title.append(cut[i]).append(" ");
-                    }
-                    String [] innerCut = cut[4].split("\"");
-                    subTitle = subTitle + cut[3] + " " + innerCut[0];
-                } else if(cut.length == 4) {
-                    for(int i=1; i<2; i++){
-                        title.append(cut[i]).append(" ");
-                    }
-                    String [] innerCut = cut[3].split("\"");
-                    subTitle = subTitle + cut[2] + " " + innerCut[0];
-                } else if(cut.length == 3) {
-                    String [] innerCut = cut[2].split("\"");
-                    title.append(cut[1]).append(" ").append(innerCut[0]);
+                String admin = address.getAdminArea();
+                String locality = address.getLocality();
+                String thoroughFare = address.getThoroughfare();
+                String feature = address.getFeatureName();
+
+                if(admin != null){
+                    if(locality != null)    title.append(admin).append(" ").append(locality);
+                    else                    title.append(admin);
+                } else {
+                    if(locality != null)    title.append(locality);
+                    else                    title.append("");
+                }
+
+                if(thoroughFare != null){
+                    if(feature != null)     subTitle.append(thoroughFare).append(" ").append(feature);
+                    else                    subTitle.append(thoroughFare);
+                } else {
+                    if(feature != null)     subTitle.append(feature);
+                    else                    subTitle.append("");
                 }
 
                 if(location != null){
-                    Address address = list.get(0);
                     newLat = address.getLatitude();
                     newLon = address.getLongitude();
                 } else {
@@ -165,7 +162,7 @@ public class SettingDetailLocationActivity extends AppCompatActivity implements 
                 MarkerOptions markerOptions = new MarkerOptions();
                 markerOptions.position(where);
                 markerOptions.title(title.toString());
-                markerOptions.snippet(subTitle);
+                markerOptions.snippet(subTitle.toString());
                 googleMap.addMarker(markerOptions).showInfoWindow();
 
                 location_default.setText(title.toString());

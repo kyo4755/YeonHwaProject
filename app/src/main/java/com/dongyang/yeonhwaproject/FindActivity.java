@@ -168,25 +168,6 @@ public class FindActivity extends AppCompatActivity implements View.OnClickListe
                     }
 
                     myLocation.setText(locationStr);
-
-//                    String cut[] = list.get(0).toString().split(" ");
-//                    for(int i=0; i<cut.length; i++){
-//                        System.out.println("cut["+i+"] : " + cut[i]);
-//                    }
-//
-//                    if(cut.length == 6){
-//                        String [] innerCut = cut[5].split("\"");
-//                        myLocation.setText(cut[4] + " " + innerCut[0]);
-//                    }else if(cut.length == 5) {
-//                        String [] innerCut = cut[4].split("\"");
-//                        myLocation.setText(cut[3] + " " + innerCut[0]);
-//                    } else if(cut.length == 4) {
-//                        String [] innerCut = cut[3].split("\"");
-//                        myLocation.setText(cut[2] + " " + innerCut[0]);
-//                    } else if(cut.length == 3) {
-//                        String [] innerCut = cut[2].split("\"");
-//                        myLocation.setText(cut[1] + " " + innerCut[0]);
-//                    }
                 }
 
             }
