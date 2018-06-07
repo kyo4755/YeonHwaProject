@@ -2,6 +2,8 @@ package com.dongyang.yeonhwaproject.Adapter;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.location.Location;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.dongyang.yeonhwaproject.Common.GlobalInfo;
 import com.dongyang.yeonhwaproject.POJO.FindPOJO;
 import com.dongyang.yeonhwaproject.R;
 
@@ -20,21 +23,34 @@ import java.util.ArrayList;
 
 public class FindMainAdapter extends BaseAdapter {
 
-    private ArrayList<FindPOJO> listViewItemList;
+    private Location currentLocation;
+    //private ArrayList<FindPOJO> listViewItemList;
+    private ArrayList<FindPOJO> list;
+
+    private class FindMainViewHolder{
+        ImageView img;
+        ImageView star_img;
+        TextView name;
+        TextView review_count;
+        TextView distance;
+    }
 
     public FindMainAdapter(ArrayList<FindPOJO> data) {
-        this.listViewItemList = data;
+        this.list = data;
+        currentLocation = new Location("currentLocation");
+        currentLocation.setLatitude(GlobalInfo.settingLatitude);
+        currentLocation.setLongitude(GlobalInfo.settingLongitude);
     }
-    public ArrayList<FindPOJO> getArItem(){return listViewItemList;}
+    public ArrayList<FindPOJO> getArItem(){return list;}
 
     @Override
     public int getCount() {
-        return listViewItemList.size();
+        return list.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return listViewItemList.get(position);
+        return list.get(position);
     }
 
     @Override
@@ -44,21 +60,19 @@ public class FindMainAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
-
-        final int pos = position;
-        final Context context = parent.getContext();
-
-        if (convertView == null) {
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.find_prefab, parent, false);
-        }
-        TextView name = convertView.findViewById(R.id.prefab_name);
-
-        FindPOJO listViewItem = listViewItemList.get(position);
-
-        name.setText(listViewItem.getName());
-/*        Context context = parent.getContext();
+//        final int pos = position;
+//        final Context context = parent.getContext();
+//
+//        if (convertView == null) {
+//            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//            convertView = inflater.inflate(R.layout.find_prefab, parent, false);
+//        }
+//        TextView name = convertView.findViewById(R.id.prefab_name);
+//
+//        FindPOJO listViewItem = listViewItemList.get(position);
+//
+//        name.setText(listViewItem.getName());
+        Context context = parent.getContext();
         FindMainViewHolder holder;
 
         if(convertView == null) {
@@ -82,7 +96,25 @@ public class FindMainAdapter extends BaseAdapter {
 
         holder.name.setText(pojo.getName());
         holder.review_count.setText(pojo.getReview_count());
-        holder.distance.setText(pojo.getDistance());
+
+//        Location thisLocation = new Location("thisLocation");
+//
+//        Log.e("Adapter", pojo.getLat() + ", " + pojo.getLon());
+//        thisLocation.setLatitude(Double.parseDouble(pojo.getLat()));
+//        thisLocation.setLongitude(Double.parseDouble(pojo.getLon()));
+//
+//        float distanceFloat = currentLocation.distanceTo(thisLocation);
+//
+//        String distanceStr;
+//        if(distanceFloat < 1000f){
+//            distanceStr = distanceFloat + "m";
+//        } else {
+//            int kilo = (int) (distanceFloat / 1000);
+//            int meter = ((int) (distanceFloat % 1000)) / 100;
+//            distanceStr = kilo + "." + meter + "km";
+//        }
+//
+//        holder.distance.setText(distanceStr);
 
         Drawable star_img;
         if(pojo.getIs_review_in())
@@ -90,7 +122,7 @@ public class FindMainAdapter extends BaseAdapter {
         else
             star_img = context.getResources().getDrawable(R.drawable.star_noncolor);
         holder.star_img.setImageDrawable(star_img);
-        */
+
         return convertView;
     }
 }

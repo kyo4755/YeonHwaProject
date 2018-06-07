@@ -5,17 +5,22 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
 import com.dongyang.yeonhwaproject.Adapter.FindMainAdapter;
+import com.dongyang.yeonhwaproject.Common.GlobalInfo;
 import com.dongyang.yeonhwaproject.DetailActivity.FindDetailActivity;
+import com.dongyang.yeonhwaproject.FindActivity;
+import com.dongyang.yeonhwaproject.GPS.GPSInfo;
 import com.dongyang.yeonhwaproject.POJO.FindPOJO;
 import com.dongyang.yeonhwaproject.R;
 
@@ -36,8 +41,7 @@ public class FindHospitalActivity extends Fragment{
     private ArrayList<FindPOJO> arrays;
     FindMainAdapter adapter;
 
-    private final String key = "qykcrKr3huKnjZV66xsvPHACE4seVKMSy6yWtpXPqvEBBWLFqYkzcm7bNXfDdrYs0pZ9uWh%2BlHKwh6pzSNw9Mw%3D%3D";
-    private final String url = "http://apis.data.go.kr/B552657/HsptlAsembySearchService/getHsptlMdcncListInfoInqire";
+    LottieAnimationView loadingAnim;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -47,6 +51,8 @@ public class FindHospitalActivity extends Fragment{
 
         ListView listView = view.findViewById(R.id.find_hospital_listview);
         adapter = new FindMainAdapter(arrays);
+
+        loadingAnim = view.findViewById(R.id.find_hospital_loading);
 
         listView.setAdapter(adapter);
         getXMLData();
@@ -63,13 +69,31 @@ public class FindHospitalActivity extends Fragment{
     }
 
     private void getXMLData() {
+        loadingAnim.setVisibility(View.VISIBLE);
+        loadingAnim.playAnimation();
+        loadingAnim.loop(true);
+
         AQuery aQuery = new AQuery(getActivity());
         HashMap<String, String> params = new HashMap<>();
-        params.put("serviceKey", key);
-        params.put("Q0", "서울특별시");
-        params.put("Q1", "구로구");
+        params.put("serviceKey", GlobalInfo.findHosPharKey);
 
-        String fullURL = addParams(url, params);
+        if(GlobalInfo.isSettingLocation){
+            params.put("WGS84_LON", String.valueOf(GlobalInfo.settingLongitude));
+            params.put("WGS84_LAT", String.valueOf(GlobalInfo.settingLatitude));
+        } else {
+            GPSInfo gpsInfo = new GPSInfo(getContext());
+            if(gpsInfo.isGetLocation()) {
+                double latitude = gpsInfo.getLat();
+                double longitude = gpsInfo.getLon();
+
+                params.put("WGS84_LON", String.valueOf(longitude));
+                params.put("WGS84_LAT", String.valueOf(latitude));
+            }
+        }
+
+        String fullURL = addParams(GlobalInfo.findHosPharURL, params);
+        Log.e("message", fullURL);
+
         aQuery.ajax(fullURL, String.class, new AjaxCallback<String>() {
             @TargetApi(Build.VERSION_CODES.KITKAT)
             @Override
@@ -100,6 +124,12 @@ public class FindHospitalActivity extends Fragment{
                                 if (startTag.equals("dutyTel1")){
                                     data.setTel(parser.nextText());
                                 }
+                                if (startTag.equals("latitude")){
+                                    data.setLat(parser.nextText());
+                                }
+                                if (startTag.equals("longitude")){
+                                    data.setLon(parser.nextText());
+                                }
                                 break;
                             case XmlPullParser.END_TAG:
                                 endTag = parser.getName();
@@ -114,6 +144,9 @@ public class FindHospitalActivity extends Fragment{
                     if (arrays.size() > 0) {
                         adapter.getArItem().addAll(arrays);
                         adapter.notifyDataSetChanged();
+
+                        loadingAnim.setVisibility(View.GONE);
+                        loadingAnim.pauseAnimation();
                     }
 
                 } catch (XmlPullParserException e) {

@@ -5,6 +5,11 @@ package com.dongyang.yeonhwaproject.Common;
  */
 
 public class GlobalInfo {
+
+    public final static String findHosPharKey = "qykcrKr3huKnjZV66xsvPHACE4seVKMSy6yWtpXPqvEBBWLFqYkzcm7bNXfDdrYs0pZ9uWh%2BlHKwh6pzSNw9Mw%3D%3D";
+    //public final static String findHosPharURL = "http://apis.data.go.kr/B552657/HsptlAsembySearchService/getHsptlMdcncListInfoInqire";
+    public final static String findHosPharURL = "http://apis.data.go.kr/B552657/HsptlAsembySearchService/getHsptlMdcncLcinfoInqire";
+
     public static boolean isSettingLocation = false;
     public static double settingLatitude, settingLongitude;
 }
