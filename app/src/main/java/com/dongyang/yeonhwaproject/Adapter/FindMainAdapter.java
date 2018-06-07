@@ -1,8 +1,10 @@
 package com.dongyang.yeonhwaproject.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
+import android.support.constraint.ConstraintLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dongyang.yeonhwaproject.Common.GlobalInfo;
+import com.dongyang.yeonhwaproject.DetailActivity.FindDetailActivity;
 import com.dongyang.yeonhwaproject.POJO.FindPOJO;
 import com.dongyang.yeonhwaproject.R;
 
@@ -23,7 +26,6 @@ import java.util.ArrayList;
 
 public class FindMainAdapter extends BaseAdapter {
 
-    private Location currentLocation;
     //private ArrayList<FindPOJO> listViewItemList;
     private ArrayList<FindPOJO> list;
 
@@ -33,13 +35,11 @@ public class FindMainAdapter extends BaseAdapter {
         TextView name;
         TextView review_count;
         TextView distance;
+        ConstraintLayout prefab
     }
 
     public FindMainAdapter(ArrayList<FindPOJO> data) {
         this.list = data;
-        currentLocation = new Location("currentLocation");
-        currentLocation.setLatitude(GlobalInfo.settingLatitude);
-        currentLocation.setLongitude(GlobalInfo.settingLongitude);
     }
     public ArrayList<FindPOJO> getArItem(){return list;}
 
@@ -72,7 +72,8 @@ public class FindMainAdapter extends BaseAdapter {
 //        FindPOJO listViewItem = listViewItemList.get(position);
 //
 //        name.setText(listViewItem.getName());
-        Context context = parent.getContext();
+        final Context context = parent.getContext();
+        final int pos = position;
         FindMainViewHolder holder;
 
         if(convertView == null) {
@@ -85,6 +86,7 @@ public class FindMainAdapter extends BaseAdapter {
             holder.star_img = convertView.findViewById(R.id.prefab_star_image);
             holder.review_count = convertView.findViewById(R.id.prefab_review_count);
             holder.distance = convertView.findViewById(R.id.prefab_distance);
+            holder.prefab  = convertView.findViewById(R.id.prefab);
 
             convertView.setTag(holder);
         }
@@ -92,12 +94,28 @@ public class FindMainAdapter extends BaseAdapter {
             holder = (FindMainViewHolder) convertView.getTag();
         }
 
+
+        holder.prefab.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, FindDetailActivity.class);
+                FindPOJO listViewItem = list.get(pos);
+
+                intent.putExtra("prefab_name", listViewItem.getName());
+                intent.putExtra("prefab_address", listViewItem.getAddress());
+                intent.putExtra("prefab_tel", listViewItem.getTel());
+                intent.putExtra("x_lat", listViewItem.getLat());
+                intent.putExtra("y_lon", listViewItem.getLon());
+                context.startActivity(intent);
+
+            }
+        });
+
         FindPOJO pojo = list.get(position);
 
         holder.name.setText(pojo.getName());
         holder.review_count.setText(pojo.getReview_count());
-
-        holder.distance.setText(pojo.getDistance() + "km");
 
         Drawable star_img;
         if(pojo.getIs_review_in())
