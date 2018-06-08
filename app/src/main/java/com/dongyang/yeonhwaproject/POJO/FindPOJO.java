@@ -10,7 +10,29 @@ public class FindPOJO {
     private String tel;
     private String review_count;
     private String distance;
+    private String lat;
+    private String lon;
     private boolean is_review_in = false;
+
+    public String getLat() {
+        return lat;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
+    public String getLon() {
+        return lon;
+    }
+
+    public void setLon(String lon) {
+        this.lon = lon;
+    }
+
+    public boolean isIs_review_in() {
+        return is_review_in;
+    }
 
     public String getReview_count() {
         return review_count;

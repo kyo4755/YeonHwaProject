@@ -35,7 +35,7 @@ public class FindMainAdapter extends BaseAdapter {
         TextView name;
         TextView review_count;
         TextView distance;
-        ConstraintLayout prefab
+        ConstraintLayout prefab;
     }
 
     public FindMainAdapter(ArrayList<FindPOJO> data) {
@@ -73,7 +73,6 @@ public class FindMainAdapter extends BaseAdapter {
 //
 //        name.setText(listViewItem.getName());
         final Context context = parent.getContext();
-        final int pos = position;
         FindMainViewHolder holder;
 
         if(convertView == null) {
@@ -94,25 +93,21 @@ public class FindMainAdapter extends BaseAdapter {
             holder = (FindMainViewHolder) convertView.getTag();
         }
 
+        final FindPOJO pojo = list.get(position);
 
         holder.prefab.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, FindDetailActivity.class);
-                FindPOJO listViewItem = list.get(pos);
 
-                intent.putExtra("prefab_name", listViewItem.getName());
-                intent.putExtra("prefab_address", listViewItem.getAddress());
-                intent.putExtra("prefab_tel", listViewItem.getTel());
-                intent.putExtra("x_lat", listViewItem.getLat());
-                intent.putExtra("y_lon", listViewItem.getLon());
+                intent.putExtra("prefab_name", pojo.getName());
+                intent.putExtra("prefab_address", pojo.getAddress());
+                intent.putExtra("prefab_tel", pojo.getTel());
+                intent.putExtra("x_lat", pojo.getLat());
+                intent.putExtra("y_lon", pojo.getLon());
                 context.startActivity(intent);
-
             }
         });
-
-        FindPOJO pojo = list.get(position);
 
         holder.name.setText(pojo.getName());
         holder.review_count.setText(pojo.getReview_count());
