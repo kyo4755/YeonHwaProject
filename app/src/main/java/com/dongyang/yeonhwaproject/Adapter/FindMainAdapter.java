@@ -60,18 +60,6 @@ public class FindMainAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-//        final int pos = position;
-//        final Context context = parent.getContext();
-//
-//        if (convertView == null) {
-//            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//            convertView = inflater.inflate(R.layout.find_prefab, parent, false);
-//        }
-//        TextView name = convertView.findViewById(R.id.prefab_name);
-//
-//        FindPOJO listViewItem = listViewItemList.get(position);
-//
-//        name.setText(listViewItem.getName());
         final Context context = parent.getContext();
         FindMainViewHolder holder;
 
@@ -94,6 +82,13 @@ public class FindMainAdapter extends BaseAdapter {
         }
 
         final FindPOJO pojo = list.get(position);
+//        System.out.println("=====================" + pojo.getAddress());
+//        System.out.println("=====================" + pojo.getHpid());
+//        System.out.println("=====================" + pojo.getLat());
+//        System.out.println("=====================" + pojo.getLon());
+//        System.out.println("=====================" + pojo.getName());
+//        System.out.println("=====================" + pojo.getTel());
+        System.out.println("=====================" + pojo.getDistance());
 
         holder.prefab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,6 +107,12 @@ public class FindMainAdapter extends BaseAdapter {
         holder.name.setText(pojo.getName());
         holder.review_count.setText(pojo.getReview_count());
 
+//        float distanceFloat = Float.parseFloat(pojo.getDistance());
+//        String distanceStr;
+//        if(distanceFloat < 1)   distanceStr = String.valueOf(distanceFloat * 1000) + "m";
+//        else                    distanceStr = distanceFloat + "km";
+//        holder.distance.setText(distanceStr);
+
         Drawable star_img;
         if(pojo.getIs_review_in())
             star_img = context.getResources().getDrawable(R.drawable.star_color);
@@ -121,4 +122,20 @@ public class FindMainAdapter extends BaseAdapter {
 
         return convertView;
     }
+
+    /*@Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        final int pos = position;
+        final Context context = parent.getContext();
+
+        if (convertView == null) {
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(R.layout.find_prefab, parent, false);
+        }
+        TextView name = convertView.findViewById(R.id.prefab_name);
+
+        FindPOJO listViewItem = listViewItemList.get(position);
+
+        name.setText(listViewItem.getName());
+    }*/
 }
