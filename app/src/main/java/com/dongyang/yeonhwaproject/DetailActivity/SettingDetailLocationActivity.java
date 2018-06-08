@@ -192,7 +192,7 @@ public class SettingDetailLocationActivity extends AppCompatActivity implements 
         markerOptions.title(markerTitle);
         markerOptions.snippet(markerSnippet);
         markerOptions.draggable(true);
-        currentMarker = mGoogleMap.addMarker(markerOptions);
+        //currentMarker = mGoogleMap.addMarker(markerOptions);
 
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(DEFAULT_LOCATION, 15);
         mGoogleMap.moveCamera(cameraUpdate);

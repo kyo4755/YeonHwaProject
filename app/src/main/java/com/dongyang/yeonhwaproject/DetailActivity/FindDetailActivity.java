@@ -11,11 +11,13 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.dongyang.yeonhwaproject.R;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 /**
@@ -28,6 +30,10 @@ public class FindDetailActivity extends AppCompatActivity implements OnMapReadyC
 
     TextView detail_location, detail_phone;
     Button detail_toolbar_call;
+
+    GoogleMap mGoogleMap;
+
+    private Marker currentMarker = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +94,8 @@ public class FindDetailActivity extends AppCompatActivity implements OnMapReadyC
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        mGoogleMap = googleMap;
+        setDefaultLocation();
 
         Intent intent = getIntent();
 
@@ -99,9 +107,30 @@ public class FindDetailActivity extends AppCompatActivity implements OnMapReadyC
         markerOptions.title("병원");
         markerOptions.snippet(intent.getStringExtra("prefab_name"));
 
-        googleMap.addMarker(markerOptions);
+        googleMap.addMarker(markerOptions).showInfoWindow();
 
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(SEOUL));
-        googleMap.animateCamera(CameraUpdateFactory.zoomTo(10));
+        googleMap.animateCamera(CameraUpdateFactory.zoomTo(16));
+    }
+
+    public void setDefaultLocation() {
+
+        //디폴트 위치, Seoul
+        LatLng DEFAULT_LOCATION = new LatLng(37.56, 126.97);
+        String markerTitle = "위치정보 가져올 수 없음";
+        String markerSnippet = "위치 퍼미션과 GPS 활성 여부 확인하세요";
+
+        if(currentMarker != null) currentMarker.remove();
+
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(DEFAULT_LOCATION);
+        markerOptions.title(markerTitle);
+        markerOptions.snippet(markerSnippet);
+        markerOptions.draggable(true);
+        //currentMarker = mGoogleMap.addMarker(markerOptions);
+
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(DEFAULT_LOCATION, 15);
+        mGoogleMap.moveCamera(cameraUpdate);
+
     }
 }

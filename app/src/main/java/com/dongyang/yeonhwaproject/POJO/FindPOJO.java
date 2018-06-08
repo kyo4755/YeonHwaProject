@@ -5,14 +5,14 @@ package com.dongyang.yeonhwaproject.POJO;
  */
 
 public class FindPOJO {
-    private String name;
-    private String address;
-    private String tel;
-    private String review_count;
-    private String distance;
-    private String lat;
-    private String lon;
-    private String hpid;
+    private String name = "";
+    private String address = "";
+    private String tel = "";
+    private String review_count = "";
+    private String distance = "0.9";
+    private String lat = "127";
+    private String lon = "31";
+    private String hpid = "111";
     private boolean is_review_in = false;
 
     public String getHpid() {

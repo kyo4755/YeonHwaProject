@@ -107,11 +107,11 @@ public class FindMainAdapter extends BaseAdapter {
         holder.name.setText(pojo.getName());
         holder.review_count.setText(pojo.getReview_count());
 
-//        float distanceFloat = Float.parseFloat(pojo.getDistance());
-//        String distanceStr;
-//        if(distanceFloat < 1)   distanceStr = String.valueOf(distanceFloat * 1000) + "m";
-//        else                    distanceStr = distanceFloat + "km";
-//        holder.distance.setText(distanceStr);
+        float distanceFloat = Float.parseFloat(pojo.getDistance());
+        String distanceStr;
+        if(distanceFloat < 1)   distanceStr = String.valueOf((int)(distanceFloat * 1000)) + "m";
+        else                    distanceStr = distanceFloat + "km";
+        holder.distance.setText(distanceStr);
 
         Drawable star_img;
         if(pojo.getIs_review_in())
