@@ -35,7 +35,7 @@ public class FindMainAdapter extends BaseAdapter {
         TextView name;
         TextView review_count;
         TextView distance;
-        ConstraintLayout prefab
+        ConstraintLayout prefab;
     }
 
     public FindMainAdapter(ArrayList<FindPOJO> data) {
@@ -60,20 +60,7 @@ public class FindMainAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-//        final int pos = position;
-//        final Context context = parent.getContext();
-//
-//        if (convertView == null) {
-//            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//            convertView = inflater.inflate(R.layout.find_prefab, parent, false);
-//        }
-//        TextView name = convertView.findViewById(R.id.prefab_name);
-//
-//        FindPOJO listViewItem = listViewItemList.get(position);
-//
-//        name.setText(listViewItem.getName());
         final Context context = parent.getContext();
-        final int pos = position;
         FindMainViewHolder holder;
 
         if(convertView == null) {
@@ -94,28 +81,37 @@ public class FindMainAdapter extends BaseAdapter {
             holder = (FindMainViewHolder) convertView.getTag();
         }
 
+        final FindPOJO pojo = list.get(position);
+//        System.out.println("=====================" + pojo.getAddress());
+//        System.out.println("=====================" + pojo.getHpid());
+//        System.out.println("=====================" + pojo.getLat());
+//        System.out.println("=====================" + pojo.getLon());
+//        System.out.println("=====================" + pojo.getName());
+//        System.out.println("=====================" + pojo.getTel());
+        System.out.println("=====================" + pojo.getDistance());
 
         holder.prefab.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, FindDetailActivity.class);
-                FindPOJO listViewItem = list.get(pos);
 
-                intent.putExtra("prefab_name", listViewItem.getName());
-                intent.putExtra("prefab_address", listViewItem.getAddress());
-                intent.putExtra("prefab_tel", listViewItem.getTel());
-                intent.putExtra("x_lat", listViewItem.getLat());
-                intent.putExtra("y_lon", listViewItem.getLon());
+                intent.putExtra("prefab_name", pojo.getName());
+                intent.putExtra("prefab_address", pojo.getAddress());
+                intent.putExtra("prefab_tel", pojo.getTel());
+                intent.putExtra("x_lat", pojo.getLat());
+                intent.putExtra("y_lon", pojo.getLon());
                 context.startActivity(intent);
-
             }
         });
 
-        FindPOJO pojo = list.get(position);
-
         holder.name.setText(pojo.getName());
         holder.review_count.setText(pojo.getReview_count());
+
+//        float distanceFloat = Float.parseFloat(pojo.getDistance());
+//        String distanceStr;
+//        if(distanceFloat < 1)   distanceStr = String.valueOf(distanceFloat * 1000) + "m";
+//        else                    distanceStr = distanceFloat + "km";
+//        holder.distance.setText(distanceStr);
 
         Drawable star_img;
         if(pojo.getIs_review_in())
@@ -126,4 +122,20 @@ public class FindMainAdapter extends BaseAdapter {
 
         return convertView;
     }
+
+    /*@Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        final int pos = position;
+        final Context context = parent.getContext();
+
+        if (convertView == null) {
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(R.layout.find_prefab, parent, false);
+        }
+        TextView name = convertView.findViewById(R.id.prefab_name);
+
+        FindPOJO listViewItem = listViewItemList.get(position);
+
+        name.setText(listViewItem.getName());
+    }*/
 }
