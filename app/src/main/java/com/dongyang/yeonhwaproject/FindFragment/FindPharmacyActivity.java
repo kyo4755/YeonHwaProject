@@ -1,21 +1,28 @@
 package com.dongyang.yeonhwaproject.FindFragment;
 
 import android.annotation.TargetApi;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
 import com.dongyang.yeonhwaproject.Adapter.FindMainAdapter;
+import com.dongyang.yeonhwaproject.Common.GlobalInfo;
+import com.dongyang.yeonhwaproject.Connection.NetworkTask;
 import com.dongyang.yeonhwaproject.DetailActivity.FindDetailActivity;
+import com.dongyang.yeonhwaproject.GPS.GPSInfo;
 import com.dongyang.yeonhwaproject.POJO.FindPOJO;
 import com.dongyang.yeonhwaproject.R;
 
@@ -36,20 +43,23 @@ public class FindPharmacyActivity extends Fragment{
     private ArrayList<FindPOJO> arrays;
     FindMainAdapter adapter;
 
-    private final String key = "qykcrKr3huKnjZV66xsvPHACE4seVKMSy6yWtpXPqvEBBWLFqYkzcm7bNXfDdrYs0pZ9uWh%2BlHKwh6pzSNw9Mw%3D%3D";
-    private final String url = "http://apis.data.go.kr/B552657/HsptlAsembySearchService/getHsptlMdcncListInfoInqire";
+    LottieAnimationView loadingAnim;
+    ListView listView;
+
+    private int pageNo = 0;
+    boolean isLastItemVisible = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.find_pharmacy_content, container, false);
 
+        listView = view.findViewById(R.id.find_pharmacy_listview);
         arrays = new ArrayList<>();
-
-        ListView listView = view.findViewById(R.id.find_pharmacy_listview);
         adapter = new FindMainAdapter(arrays);
-
         listView.setAdapter(adapter);
-        getXMLData();
+
+        loadingAnim = view.findViewById(R.id.find_pharmacy_loading);
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -59,81 +69,136 @@ public class FindPharmacyActivity extends Fragment{
             }
         });
 
+        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && isLastItemVisible){
+                    getXMLData();
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                isLastItemVisible = (totalItemCount > 0) && (firstVisibleItem + visibleItemCount >= totalItemCount);
+            }
+        });
+
+        getXMLData();
+
         return view;
     }
 
+    @TargetApi(Build.VERSION_CODES.KITKAT)
     private void getXMLData() {
-        AQuery aQuery = new AQuery(getActivity());
-        HashMap<String, String> params = new HashMap<>();
-        params.put("serviceKey", key);
-        params.put("Q0", "서울특별시");
-        params.put("Q1", "구로구");
+        loadingAnim.setVisibility(View.VISIBLE);
+        loadingAnim.playAnimation();
+        loadingAnim.loop(true);
 
-        String fullURL = addParams(url, params);
-        aQuery.ajax(fullURL, String.class, new AjaxCallback<String>() {
-            @TargetApi(Build.VERSION_CODES.KITKAT)
-            @Override
-            public void callback(String url, String result, AjaxStatus status) {
-                try {
-                    String startTag, endTag;
-                    XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
-                    XmlPullParser parser = factory.newPullParser();
+        pageNo++;
 
-                    InputStream is = new ByteArrayInputStream(result.getBytes(StandardCharsets.UTF_8));
+        ContentValues params = new ContentValues();
+        params.put("serviceKey", GlobalInfo.findHosPharKey);
 
-                    parser.setInput(is, null);
-                    int eventType = parser.getEventType();
+        if(GlobalInfo.isSettingLocation){
+            params.put("yPos", String.valueOf(GlobalInfo.settingLongitude));
+            params.put("xPos", String.valueOf(GlobalInfo.settingLatitude));
+            params.put("pageNo", pageNo);
+        } else {
+            GPSInfo gpsInfo = new GPSInfo(getContext());
+            if(gpsInfo.isGetLocation()) {
+                double latitude = gpsInfo.getLat();
+                double longitude = gpsInfo.getLon();
 
-                    while (eventType != XmlPullParser.END_DOCUMENT) {
-                        switch (eventType) {
-                            case XmlPullParser.START_TAG:
-                                startTag = parser.getName();
-                                if (startTag.equals("item")) {
-                                    data  = new FindPOJO();
-                                }
-                                if (startTag.equals("dutyName")){
-                                    data.setName(parser.nextText());
-                                }
-                                if (startTag.equals("dutyAddr")){
-                                    data.setAddress(parser.nextText());
-                                }
-                                if (startTag.equals("dutyTel1")){
-                                    data.setTel(parser.nextText());
-                                }
-                                break;
-                            case XmlPullParser.END_TAG:
-                                endTag = parser.getName();
-                                if (endTag.equals("item")){
-                                    arrays.add(data);
-                                }
-                                break;
-                        }
-                        eventType = parser.next();
-                    }
-
-                    if (arrays.size() > 0) {
-                        adapter.getArItem().addAll(arrays);
-                        adapter.notifyDataSetChanged();
-                    }
-
-                } catch (XmlPullParserException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    private String addParams(String aurl, HashMap<String, String> params) {
-        StringBuilder stringBuilder = new StringBuilder(aurl + "?");
-
-        if (params != null) {
-            for (String key : params.keySet()) {
-                stringBuilder.append(key + "=");
-                stringBuilder.append(params.get(key) + "&");
+                params.put("yPos", String.valueOf(longitude));
+                params.put("xPos", String.valueOf(latitude));
             }
         }
-        return stringBuilder.toString();
+
+        FindHosPharNetworkTask findHosPharNetworkTask = new FindPharmacyActivity.FindHosPharNetworkTask(GlobalInfo.findPharURL, params);
+        findHosPharNetworkTask.execute();
+
+
+    }
+
+    private class FindHosPharNetworkTask extends AsyncTask<Void, Void, String> {
+
+        private String url;
+        private ContentValues values;
+
+        FindHosPharNetworkTask(String url, ContentValues values){
+            this.url = url;
+            this.values = values;
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            NetworkTask networkTask = new NetworkTask();
+            InputStream result = networkTask.request(url, values);
+
+            try {
+                final int STEP_ITEM = 0, STEP_DIS = 1, STEP_ADDR = 2, STEP_NAME = 3,
+                        STEP_TEL = 4, STEP_LAT = 5, STEP_LON = 6, STEP_YKIHO = 7, STEP_NONE = 100;
+
+                int current_step = STEP_NONE;
+
+                XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+                XmlPullParser parser = factory.newPullParser();
+
+                parser.setInput(result, null);
+                int eventType = parser.getEventType();
+
+                arrays = new ArrayList<>();
+
+                while (eventType != XmlPullParser.END_DOCUMENT) {
+                    if (eventType == XmlPullParser.START_TAG) {
+                        String startTag = parser.getName();
+                        if (startTag.equals("item")){
+                            current_step = STEP_ITEM;
+                            data = new FindPOJO();
+                        }
+                        else if (startTag.equals("distance"))       current_step = STEP_DIS;
+                        else if (startTag.equals("addr"))       current_step = STEP_ADDR;
+                        else if (startTag.equals("yadmNm"))       current_step = STEP_NAME;
+                        else if (startTag.equals("telno"))       current_step = STEP_TEL;
+                        else if (startTag.equals("xPos"))       current_step = STEP_LAT;
+                        else if (startTag.equals("yPos"))      current_step = STEP_LON;
+                        else if (startTag.equals("ykiho"))           current_step = STEP_YKIHO;
+                        else                                        current_step = STEP_NONE;
+                    }
+                    else if (eventType == XmlPullParser.END_TAG) {
+                        String endTag = parser.getName() ;
+                        if (endTag.equals("item"))     arrays.add(data);
+                    }
+                    else if (eventType == XmlPullParser.TEXT) {
+                        String text = parser.getText();
+                        if (current_step == STEP_DIS){
+                            System.out.println("distance : " + text);
+                            data.setDistance(text);
+                        }
+                        else if (current_step == STEP_ADDR)                   data.setAddress(text);
+                        else if (current_step == STEP_NAME)                   data.setName(text);
+                        else if (current_step == STEP_TEL)                    data.setTel(text);
+                        else if (current_step == STEP_LAT)                    data.setLat(text);
+                        else if (current_step == STEP_LON)                    data.setLon(text);
+                        else if (current_step == STEP_YKIHO)                   data.setYkiho(text);
+                    }
+                    eventType = parser.next();
+                }
+            } catch (XmlPullParserException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            if (arrays.size() > 0) {
+                adapter.getArItem().addAll(arrays);
+                loadingAnim.setVisibility(View.GONE);
+                loadingAnim.pauseAnimation();
+            }
+        }
     }
 }

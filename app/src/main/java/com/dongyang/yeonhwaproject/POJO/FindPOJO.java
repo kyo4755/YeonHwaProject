@@ -12,15 +12,15 @@ public class FindPOJO {
     private String distance = "0.9";
     private String lat = "127";
     private String lon = "31";
-    private String hpid = "111";
+    private String ykiho = "111";
     private boolean is_review_in = false;
 
-    public String getHpid() {
-        return hpid;
+    public String getYkiho() {
+        return ykiho;
     }
 
-    public void setHpid(String hpid) {
-        this.hpid = hpid;
+    public void setYkiho(String ykiho) {
+        this.ykiho = ykiho;
     }
 
     public String getLat() {
