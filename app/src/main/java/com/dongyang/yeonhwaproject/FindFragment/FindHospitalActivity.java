@@ -91,11 +91,11 @@ public class FindHospitalActivity extends Fragment{
         pageNo++;
 
         ContentValues params = new ContentValues();
-        params.put("serviceKey", GlobalInfo.findHosPharKey);
+        params.put("ServiceKey", GlobalInfo.findHosKey);
 
         if(GlobalInfo.isSettingLocation){
-            params.put("yPos", String.valueOf(GlobalInfo.settingLongitude));
-            params.put("xPos", String.valueOf(GlobalInfo.settingLatitude));
+            params.put("yPos", String.valueOf(GlobalInfo.settingLatitude));
+            params.put("xPos", String.valueOf(GlobalInfo.settingLongitude));
             params.put("pageNo", pageNo);
         } else {
             GPSInfo gpsInfo = new GPSInfo(getContext());
@@ -103,10 +103,13 @@ public class FindHospitalActivity extends Fragment{
                 double latitude = gpsInfo.getLat();
                 double longitude = gpsInfo.getLon();
 
-                params.put("yPos", String.valueOf(longitude));
-                params.put("xPos", String.valueOf(latitude));
+                params.put("yPos", String.valueOf(latitude));
+                params.put("xPos", String.valueOf(longitude));
+                params.put("pageNo", pageNo);
             }
         }
+
+        params.put("radius", "3000");
 
         FindHosPharNetworkTask findHosPharNetworkTask = new FindHosPharNetworkTask(GlobalInfo.findHosURL, params);
         findHosPharNetworkTask.execute();
