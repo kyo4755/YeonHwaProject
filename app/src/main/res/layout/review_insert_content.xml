@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="10dp"
+    android:paddingLeft="15dp"
+    android:paddingStart="15dp"
+    android:paddingRight="15dp"
+    android:paddingEnd="15dp"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="이 장소를 추천하시겠어요?"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:id="@+id/review_insert_maintext"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <RatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/review_insert_ratingbar"
+        android:numStars="5"
+        android:rating="0"
+        android:stepSize="0.5"
+        android:layout_marginTop="10dp"
+        style="@style/customRatingBar"
+        app:layout_constraintTop_toBottomOf="@+id/review_insert_maintext"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/review_insert_edittext"
+        android:hint="장소에 대한 솔직한 리뷰를 남겨 주세요."
+        android:gravity="left"
+        android:background="@drawable/login_edittext_bg"
+        app:layout_constraintTop_toBottomOf="@+id/review_insert_ratingbar"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/review_insert_btn"
+        android:text="리뷰 작성"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:padding="15dp"
+        android:background="@drawable/login_btn_bg"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</android.support.constraint.ConstraintLayout>

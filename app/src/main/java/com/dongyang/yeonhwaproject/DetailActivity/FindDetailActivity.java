@@ -1,20 +1,19 @@
 package com.dongyang.yeonhwaproject.DetailActivity;
 
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.dongyang.yeonhwaproject.Adapter.FindDetailTabPagerAdapter;
 import com.dongyang.yeonhwaproject.R;
-import com.google.android.gms.maps.MapFragment;
+import com.dongyang.yeonhwaproject.ReviewInsertActivity;
 
 /**
  * Created by Kim Jong-Hwa on 2018-05-27.
@@ -83,6 +82,16 @@ public class FindDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = getIntent();
                 startActivity(new Intent("android.intent.action.DIAL", Uri.parse("tel:"+intent.getStringExtra("prefab_tel"))));
+            }
+        });
+
+        FloatingActionButton fab = findViewById(R.id.detail_floating_action_btn);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            Intent it = new Intent(FindDetailActivity.this, ReviewInsertActivity.class);
+            startActivity(it);
+            overridePendingTransition(R.anim.right_in_animation, R.anim.not_move_animation);
             }
         });
     }

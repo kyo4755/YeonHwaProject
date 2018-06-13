@@ -71,6 +71,10 @@
             android:theme="@style/AppTheme.NoActionBar"
             tools:ignore="InnerclassSeparator" />
 
+        <activity
+            android:name=".ReviewInsertActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
     </application>
 
 </manifest>
