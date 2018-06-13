@@ -98,6 +98,7 @@
             android:inputType="phone"
             android:id="@+id/register_edittext_phone"
             android:layout_marginTop="10dp"
+            android:maxLength="13"
             app:layout_constraintTop_toBottomOf="@+id/register_email_layout"/>
 
         <Button

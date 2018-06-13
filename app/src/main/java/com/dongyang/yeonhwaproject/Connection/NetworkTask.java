@@ -2,6 +2,7 @@ package com.dongyang.yeonhwaproject.Connection;
 
 
 import android.content.ContentValues;
+import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,6 +45,7 @@ public class NetworkTask {
         }
 
         String newURL = url + sbParams.toString();
+        Log.e("URL", newURL);
 
         try {
             URL requestURL = new URL(newURL);

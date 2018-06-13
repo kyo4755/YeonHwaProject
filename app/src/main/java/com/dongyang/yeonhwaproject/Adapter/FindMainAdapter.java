@@ -78,7 +78,6 @@ public class FindMainAdapter extends BaseAdapter {
         }
 
         final FindPOJO pojo = list.get(position);
-        System.out.println("=====================" + pojo.getDistance());
 
         holder.prefab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +89,7 @@ public class FindMainAdapter extends BaseAdapter {
                 intent.putExtra("prefab_tel", pojo.getTel());
                 intent.putExtra("x_lat", pojo.getLat());
                 intent.putExtra("y_lon", pojo.getLon());
+                intent.putExtra("hpid", pojo.getHpid());
                 context.startActivity(intent);
             }
         });

@@ -137,7 +137,7 @@ public class FindPharmacyActivity extends Fragment{
 
             try {
                 final int STEP_ITEM = 0, STEP_DIS = 1, STEP_ADDR = 2, STEP_NAME = 3,
-                        STEP_TEL = 4, STEP_LAT = 5, STEP_LON = 6, STEP_YKIHO = 7, STEP_NONE = 100;
+                        STEP_TEL = 4, STEP_LAT = 5, STEP_LON = 6, STEP_HPID = 7, STEP_NONE = 100;
 
                 int current_step = STEP_NONE;
 
@@ -162,7 +162,7 @@ public class FindPharmacyActivity extends Fragment{
                         else if (startTag.equals("telno"))       current_step = STEP_TEL;
                         else if (startTag.equals("xPos"))       current_step = STEP_LAT;
                         else if (startTag.equals("yPos"))      current_step = STEP_LON;
-                        else if (startTag.equals("ykiho"))           current_step = STEP_YKIHO;
+                        else if (startTag.equals("ykiho"))           current_step = STEP_HPID;
                         else                                        current_step = STEP_NONE;
                     }
                     else if (eventType == XmlPullParser.END_TAG) {
@@ -180,7 +180,7 @@ public class FindPharmacyActivity extends Fragment{
                         else if (current_step == STEP_TEL)                    data.setTel(text);
                         else if (current_step == STEP_LAT)                    data.setLat(text);
                         else if (current_step == STEP_LON)                    data.setLon(text);
-                        else if (current_step == STEP_YKIHO)                   data.setYkiho(text);
+                        else if (current_step == STEP_HPID)                   data.setHpid(text);
                     }
                     eventType = parser.next();
                 }

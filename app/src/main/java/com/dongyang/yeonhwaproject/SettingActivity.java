@@ -43,9 +43,18 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.setting_cancel:
-                finish();
-                overridePendingTransition(R.anim.not_move_animation, R.anim.right_out_animation);
+                finishActivity();
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        finishActivity();
+    }
+
+    private void finishActivity() {
+        finish();
+        overridePendingTransition(R.anim.not_move_animation, R.anim.right_out_animation);
     }
 }

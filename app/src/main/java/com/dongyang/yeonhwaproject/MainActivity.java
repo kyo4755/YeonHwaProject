@@ -3,6 +3,7 @@ package com.dongyang.yeonhwaproject;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
+import com.dongyang.yeonhwaproject.Common.GlobalInfo;
 import com.dongyang.yeonhwaproject.FindFragment.FindDrugsActivity;
 import com.dongyang.yeonhwaproject.FindFragment.FindHospitalActivity;
 import com.dongyang.yeonhwaproject.FindFragment.FindPharmacyActivity;
@@ -54,26 +56,74 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         View header = navigationView.getHeaderView(0);
-        final ImageView drawer_user_image = header.findViewById(R.id.drawer_user_image);
-        drawer_user_image.post(new Runnable() {
+
+        ConstraintLayout navHeader = header.findViewById(R.id.nav_header);
+        navHeader.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void run() {
-                glideManager.load(R.drawable.default_user)
-                        .centerCrop()
-                        .bitmapTransform(new CropCircleTransformation(MainActivity.this))
-                        .into(drawer_user_image);
+            public void onClick(View v) {
+                if(GlobalInfo.isLogin){
+                    Intent it = new Intent(MainActivity.this, SettingActivity.class);
+                    startActivity(it);
+                    overridePendingTransition(R.anim.right_in_animation, R.anim.not_move_animation);
+                    DrawerLayout drawer = findViewById(R.id.drawer_layout);
+                    drawer.closeDrawer(GravityCompat.START);
+                }
             }
         });
+
+        final LinearLayout beforeLogin = header.findViewById(R.id.before_login);
+        final LinearLayout afterLogin = header.findViewById(R.id.after_login);
+        final TextView drawerNickname = header.findViewById(R.id.drawer_user_nickname);
+        final TextView drawerEmail = header.findViewById(R.id.drawer_user_email);
+        final TextView drawerPhone = header.findViewById(R.id.drawer_user_phone);
+        final ImageView drawerImage = header.findViewById(R.id.drawer_user_image);
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                if(GlobalInfo.isLogin){
+                    beforeLogin.setVisibility(View.GONE);
+                    afterLogin.setVisibility(View.VISIBLE);
+                    drawerNickname.setText(GlobalInfo.user_name);
+                    drawerEmail.setText(GlobalInfo.user_email);
+                    drawerPhone.setText(GlobalInfo.user_phone);
+
+                    if(GlobalInfo.user_image.equals("null")){
+                        glideManager.load(R.drawable.default_user)
+                                .centerCrop()
+                                .bitmapTransform(new CropCircleTransformation(MainActivity.this))
+                                .into(drawerImage);
+                    } else {
+                        String img_url = GlobalInfo.SERVER_URL + "users/getPhoto?id=" + GlobalInfo.user_image;
+                        glideManager.load(img_url)
+                                .centerCrop()
+                                .bitmapTransform(new CropCircleTransformation(MainActivity.this))
+                                .into(drawerImage);
+                    }
+                }
+                else {
+                    beforeLogin.setVisibility(View.VISIBLE);
+                    afterLogin.setVisibility(View.GONE);
+
+                    glideManager.load(R.drawable.default_user)
+                            .centerCrop()
+                            .bitmapTransform(new CropCircleTransformation(MainActivity.this))
+                            .into(drawerImage);
+                }
+            }
+
+        };
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
 
         findHospital = findViewById(R.id.main_find_hospital);
         findPharmacy = findViewById(R.id.main_find_pharmacy);
@@ -146,7 +196,7 @@ public class MainActivity extends AppCompatActivity
         }
         overridePendingTransition(R.anim.right_in_animation, R.anim.not_move_animation);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -202,14 +252,14 @@ public class MainActivity extends AppCompatActivity
     private void LoginBtnClickListener(){
         Intent it = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(it);
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
     }
 
     private void RegisterBtnClickListener(){
         Intent it = new Intent(MainActivity.this, RegisterActivity.class);
         startActivity(it);
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
     }
 }

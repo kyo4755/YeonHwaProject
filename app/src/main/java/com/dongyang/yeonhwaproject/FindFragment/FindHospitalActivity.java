@@ -91,27 +91,26 @@ public class FindHospitalActivity extends Fragment{
         pageNo++;
 
         ContentValues params = new ContentValues();
-        params.put("ServiceKey", GlobalInfo.findHosKey);
+        params.put("ServiceKey", GlobalInfo.findHosPharKey);
 
         if(GlobalInfo.isSettingLocation){
-            params.put("yPos", String.valueOf(GlobalInfo.settingLatitude));
-            params.put("xPos", String.valueOf(GlobalInfo.settingLongitude));
-            params.put("pageNo", pageNo);
+            params.put("WGS84_LON", String.valueOf(GlobalInfo.settingLongitude));
+            params.put("WGS84_LAT", String.valueOf(GlobalInfo.settingLatitude));
         } else {
             GPSInfo gpsInfo = new GPSInfo(getContext());
             if(gpsInfo.isGetLocation()) {
                 double latitude = gpsInfo.getLat();
                 double longitude = gpsInfo.getLon();
 
-                params.put("yPos", String.valueOf(latitude));
-                params.put("xPos", String.valueOf(longitude));
-                params.put("pageNo", pageNo);
+                params.put("WGS84_LON", String.valueOf(longitude));
+                params.put("WGS84_LAT", String.valueOf(latitude));
+
             }
         }
+        params.put("pageNo", pageNo);
+        params.put("numOfRows", 10);
 
-        params.put("radius", "3000");
-
-        FindHosPharNetworkTask findHosPharNetworkTask = new FindHosPharNetworkTask(GlobalInfo.findHosURL, params);
+        FindHosPharNetworkTask findHosPharNetworkTask = new FindHosPharNetworkTask(GlobalInfo.findHosPharURL, params);
         findHosPharNetworkTask.execute();
     }
 
@@ -132,7 +131,7 @@ public class FindHospitalActivity extends Fragment{
 
             try {
                 final int STEP_ITEM = 0, STEP_DIS = 1, STEP_ADDR = 2, STEP_NAME = 3,
-                        STEP_TEL = 4, STEP_LAT = 5, STEP_LON = 6, STEP_YKIHO = 7, STEP_NONE = 100;
+                        STEP_TEL = 4, STEP_LAT = 5, STEP_LON = 6, STEP_HPID = 7, STEP_NONE = 100;
 
                 int current_step = STEP_NONE;
 
@@ -152,12 +151,12 @@ public class FindHospitalActivity extends Fragment{
                             data = new FindPOJO();
                         }
                         else if (startTag.equals("distance"))       current_step = STEP_DIS;
-                        else if (startTag.equals("addr"))       current_step = STEP_ADDR;
-                        else if (startTag.equals("yadmNm"))       current_step = STEP_NAME;
-                        else if (startTag.equals("telno"))       current_step = STEP_TEL;
-                        else if (startTag.equals("xPos"))       current_step = STEP_LAT;
-                        else if (startTag.equals("yPos"))      current_step = STEP_LON;
-                        else if (startTag.equals("ykiho"))           current_step = STEP_YKIHO;
+                        else if (startTag.equals("dutyAddr"))       current_step = STEP_ADDR;
+                        else if (startTag.equals("dutyName"))       current_step = STEP_NAME;
+                        else if (startTag.equals("dutyTel1"))       current_step = STEP_TEL;
+                        else if (startTag.equals("latitude"))       current_step = STEP_LAT;
+                        else if (startTag.equals("longitude"))      current_step = STEP_LON;
+                        else if (startTag.equals("hpid"))           current_step = STEP_HPID;
                         else                                        current_step = STEP_NONE;
                     }
                     else if (eventType == XmlPullParser.END_TAG) {
@@ -172,7 +171,7 @@ public class FindHospitalActivity extends Fragment{
                         else if (current_step == STEP_TEL)                    data.setTel(text);
                         else if (current_step == STEP_LAT)                    data.setLat(text);
                         else if (current_step == STEP_LON)                    data.setLon(text);
-                        else if (current_step == STEP_YKIHO)                   data.setYkiho(text);
+                        else if (current_step == STEP_HPID)                   data.setHpid(text);
                     }
                     eventType = parser.next();
                 }

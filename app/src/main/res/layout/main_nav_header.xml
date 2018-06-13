@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="140dp"
+    android:id="@+id/nav_header"
     android:background="@color/dark_gray"
     android:gravity="bottom"
     android:orientation="horizontal"
@@ -100,8 +101,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/drawer_user_location"
-            android:text="경기도 고양시 덕양구 소만로 49"
+            android:id="@+id/drawer_user_phone"
+            android:text="010-5269-4773"
             android:textSize="10sp"/>
 
     </LinearLayout>

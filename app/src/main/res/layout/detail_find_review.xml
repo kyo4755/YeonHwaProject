@@ -17,57 +17,97 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="15dp"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:gravity="center"
             android:background="@drawable/login_edittext_bg">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/detail_review_avg"
-                android:text="4.5"
-                android:textSize="30sp"
-                android:textColor="@color/black"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp">
 
-                <ImageView
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:id="@+id/detail_review_star_img_1"
-                    android:background="@drawable/star_color"
-                    android:layout_gravity="center_vertical"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/detail_review_avg"
+                    android:text="4.5"
+                    android:textSize="30sp"
+                    android:textColor="@color/black"/>
 
-                <ImageView
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:id="@+id/detail_review_star_img_2"
-                    android:background="@drawable/star_color"
-                    android:layout_gravity="center_vertical"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center">
 
-                <ImageView
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:id="@+id/detail_review_star_img_3"
-                    android:background="@drawable/star_color"
-                    android:layout_gravity="center_vertical"/>
+                    <ImageView
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:id="@+id/detail_review_star_img_1"
+                        android:background="@drawable/star_color"
+                        android:layout_gravity="center_vertical"/>
 
-                <ImageView
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:id="@+id/detail_review_star_img_4"
-                    android:background="@drawable/star_color"
-                    android:layout_gravity="center_vertical"/>
+                    <ImageView
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:id="@+id/detail_review_star_img_2"
+                        android:background="@drawable/star_color"
+                        android:layout_gravity="center_vertical"/>
 
-                <ImageView
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:id="@+id/detail_review_star_img_5"
-                    android:background="@drawable/star_color"
-                    android:layout_gravity="center_vertical"/>
+                    <ImageView
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:id="@+id/detail_review_star_img_3"
+                        android:background="@drawable/star_color"
+                        android:layout_gravity="center_vertical"/>
+
+                    <ImageView
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:id="@+id/detail_review_star_img_4"
+                        android:background="@drawable/star_color"
+                        android:layout_gravity="center_vertical"/>
+
+                    <ImageView
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:id="@+id/detail_review_star_img_5"
+                        android:background="@drawable/star_color"
+                        android:layout_gravity="center_vertical"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="50dp"
+                android:background="@drawable/vertical_line"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="리뷰 개수"
+                    android:textSize="17sp"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/detail_review_count"
+                    android:layout_marginTop="5dp"
+                    android:text="17"
+                    android:textSize="14sp"/>
 
             </LinearLayout>
 
