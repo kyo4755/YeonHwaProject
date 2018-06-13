@@ -7,24 +7,18 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.androidquery.AQuery;
-import com.androidquery.callback.AjaxCallback;
-import com.androidquery.callback.AjaxStatus;
 import com.dongyang.yeonhwaproject.Adapter.FindMainAdapter;
 import com.dongyang.yeonhwaproject.Common.GlobalInfo;
 import com.dongyang.yeonhwaproject.Connection.NetworkTask;
 import com.dongyang.yeonhwaproject.DetailActivity.FindDetailActivity;
-import com.dongyang.yeonhwaproject.FindActivity;
 import com.dongyang.yeonhwaproject.GPS.GPSInfo;
 import com.dongyang.yeonhwaproject.POJO.FindPOJO;
 import com.dongyang.yeonhwaproject.R;
@@ -33,13 +27,9 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.concurrent.ExecutionException;
 
 public class FindHospitalActivity extends Fragment{
 

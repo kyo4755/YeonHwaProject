@@ -53,8 +53,6 @@ public class FindActivity extends AppCompatActivity implements View.OnClickListe
         toolbar.setTitleTextColor(getResources().getColor(R.color.black));
         setSupportActionBar(toolbar);
 
-        findLocation();
-
         TabLayout tabLayout = findViewById(R.id.find_toolbar_tab);
         tabLayout.addTab(tabLayout.newTab().setText("병원").setIcon(R.drawable.tab_hostpital));
         tabLayout.addTab(tabLayout.newTab().setText("약국").setIcon(R.drawable.tab_pharmacy));
@@ -91,6 +89,7 @@ public class FindActivity extends AppCompatActivity implements View.OnClickListe
         LinearLayout findLocation = findViewById(R.id.find_my_location);
         findLocation.setOnClickListener(this);
 
+        findLocation();
 
     }
 

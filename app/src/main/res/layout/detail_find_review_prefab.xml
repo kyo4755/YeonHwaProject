@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="15dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/detail_review_prefab_img"
+        android:background="@drawable/location"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/detail_review_prefab_name"
+        android:layout_marginTop="7dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:text="안녕님"
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toRightOf="@+id/detail_review_prefab_img"
+        app:layout_constraintTop_toTopOf="@+id/detail_review_prefab_img"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/detail_review_prefab_date"
+        android:layout_marginTop="7dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginStart="7dp"
+        android:text="2018/06/13 15:58"
+        android:textSize="12sp"
+        app:layout_constraintLeft_toRightOf="@id/detail_review_prefab_name"
+        app:layout_constraintTop_toTopOf="@id/detail_review_prefab_img"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="7dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintLeft_toRightOf="@id/detail_review_prefab_img"
+        app:layout_constraintBottom_toBottomOf="@+id/detail_review_prefab_img">
+
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:id="@+id/detail_review_prefab_star_img_1"
+            android:background="@drawable/star_color"
+            android:layout_gravity="center_vertical"/>
+
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:id="@+id/detail_review_prefab_star_img_2"
+            android:background="@drawable/star_color"
+            android:layout_gravity="center_vertical"/>
+
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:id="@+id/detail_review_prefab_star_img_3"
+            android:background="@drawable/star_color"
+            android:layout_gravity="center_vertical"/>
+
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:id="@+id/detail_review_prefab_star_img_4"
+            android:background="@drawable/star_color"
+            android:layout_gravity="center_vertical"/>
+
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:id="@+id/detail_review_prefab_star_img_5"
+            android:background="@drawable/star_color"
+            android:layout_gravity="center_vertical"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/detail_review_prefab_msg"
+        android:layout_marginTop="6dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:text="굳굳"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@+id/detail_review_prefab_img"
+        app:layout_constraintLeft_toRightOf="@id/detail_review_prefab_img"/>
+
+</android.support.constraint.ConstraintLayout>

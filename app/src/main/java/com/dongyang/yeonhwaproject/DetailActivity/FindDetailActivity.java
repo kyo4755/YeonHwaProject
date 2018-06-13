@@ -4,51 +4,37 @@ import android.app.FragmentManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.dongyang.yeonhwaproject.Adapter.FindDetailTabPagerAdapter;
 import com.dongyang.yeonhwaproject.R;
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 /**
  * Created by Kim Jong-Hwa on 2018-05-27.
  */
 
-public class FindDetailActivity extends AppCompatActivity implements OnMapReadyCallback{
+public class FindDetailActivity extends AppCompatActivity {
 
-    private Toolbar toolbar;
+    private ViewPager viewPager;
 
-    TextView detail_location, detail_phone;
     Button detail_toolbar_call;
-
-    GoogleMap mGoogleMap;
-
-    private Marker currentMarker = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail_find_main);
 
-        toolbar = findViewById(R.id.detail_toolbar);
-        detail_location = findViewById(R.id.detail_location);
-        detail_phone= findViewById(R.id.detail_phone);
+        Toolbar toolbar = findViewById(R.id.detail_toolbar);
 
         Intent intent = getIntent();
         toolbar.setTitle(intent.getStringExtra("prefab_name"));
-        detail_location.setText(intent.getStringExtra("prefab_address"));
-        detail_phone.setText(intent.getStringExtra("prefab_tel"));
-
 
         toolbar.setTitleTextColor(getResources().getColor(R.color.black));
         setSupportActionBar(toolbar);
@@ -63,9 +49,33 @@ public class FindDetailActivity extends AppCompatActivity implements OnMapReadyC
             }
         });
 
-        FragmentManager fragmentManager = getFragmentManager();
-        MapFragment mapFragment = (MapFragment)fragmentManager.findFragmentById(R.id.detail_mapview);
-        mapFragment.getMapAsync(this);
+        TabLayout tabLayout = findViewById(R.id.detail_toolbar_tab);
+        tabLayout.addTab(tabLayout.newTab().setText("정보"));
+        tabLayout.addTab(tabLayout.newTab().setText("리뷰"));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+        viewPager = findViewById(R.id.detail_viewPager);
+
+        FindDetailTabPagerAdapter pagerAdapter = new FindDetailTabPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(pagerAdapter);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
         detail_toolbar_call = findViewById(R.id.detail_toolbar_call);
         detail_toolbar_call.setOnClickListener(new View.OnClickListener() {
@@ -73,13 +83,8 @@ public class FindDetailActivity extends AppCompatActivity implements OnMapReadyC
             public void onClick(View view) {
                 Intent intent = getIntent();
                 startActivity(new Intent("android.intent.action.DIAL", Uri.parse("tel:"+intent.getStringExtra("prefab_tel"))));
-
-                //startActivity(new Intent("android.intent.action.CALL", Uri.parse(tel)));
-
             }
         });
-
-
     }
 
     @Override
@@ -92,45 +97,4 @@ public class FindDetailActivity extends AppCompatActivity implements OnMapReadyC
         overridePendingTransition(R.anim.not_move_animation, R.anim.right_out_animation);
     }
 
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mGoogleMap = googleMap;
-        setDefaultLocation();
-
-        Intent intent = getIntent();
-
-        LatLng SEOUL = new LatLng(Double.parseDouble(intent.getStringExtra("x_lat")), Double.parseDouble(intent.getStringExtra("y_lon")));
-
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(SEOUL);
-
-        markerOptions.title("병원");
-        markerOptions.snippet(intent.getStringExtra("prefab_name"));
-
-        googleMap.addMarker(markerOptions).showInfoWindow();
-
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(SEOUL));
-        googleMap.animateCamera(CameraUpdateFactory.zoomTo(16));
-    }
-
-    public void setDefaultLocation() {
-
-        //디폴트 위치, Seoul
-        LatLng DEFAULT_LOCATION = new LatLng(37.56, 126.97);
-        String markerTitle = "위치정보 가져올 수 없음";
-        String markerSnippet = "위치 퍼미션과 GPS 활성 여부 확인하세요";
-
-        if(currentMarker != null) currentMarker.remove();
-
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(DEFAULT_LOCATION);
-        markerOptions.title(markerTitle);
-        markerOptions.snippet(markerSnippet);
-        markerOptions.draggable(true);
-        //currentMarker = mGoogleMap.addMarker(markerOptions);
-
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(DEFAULT_LOCATION, 15);
-        mGoogleMap.moveCamera(cameraUpdate);
-
-    }
 }

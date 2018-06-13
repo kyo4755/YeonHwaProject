@@ -3,9 +3,7 @@ package com.dongyang.yeonhwaproject.Adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.location.Location;
 import android.support.constraint.ConstraintLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +11,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.dongyang.yeonhwaproject.Common.GlobalInfo;
 import com.dongyang.yeonhwaproject.DetailActivity.FindDetailActivity;
 import com.dongyang.yeonhwaproject.POJO.FindPOJO;
 import com.dongyang.yeonhwaproject.R;
@@ -26,7 +23,6 @@ import java.util.ArrayList;
 
 public class FindMainAdapter extends BaseAdapter {
 
-    //private ArrayList<FindPOJO> listViewItemList;
     private ArrayList<FindPOJO> list;
 
     private class FindMainViewHolder{
@@ -82,12 +78,6 @@ public class FindMainAdapter extends BaseAdapter {
         }
 
         final FindPOJO pojo = list.get(position);
-//        System.out.println("=====================" + pojo.getAddress());
-//        System.out.println("=====================" + pojo.getHpid());
-//        System.out.println("=====================" + pojo.getLat());
-//        System.out.println("=====================" + pojo.getLon());
-//        System.out.println("=====================" + pojo.getName());
-//        System.out.println("=====================" + pojo.getTel());
         System.out.println("=====================" + pojo.getDistance());
 
         holder.prefab.setOnClickListener(new View.OnClickListener() {
@@ -122,20 +112,4 @@ public class FindMainAdapter extends BaseAdapter {
 
         return convertView;
     }
-
-    /*@Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        final int pos = position;
-        final Context context = parent.getContext();
-
-        if (convertView == null) {
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.find_prefab, parent, false);
-        }
-        TextView name = convertView.findViewById(R.id.prefab_name);
-
-        FindPOJO listViewItem = listViewItemList.get(position);
-
-        name.setText(listViewItem.getName());
-    }*/
 }
