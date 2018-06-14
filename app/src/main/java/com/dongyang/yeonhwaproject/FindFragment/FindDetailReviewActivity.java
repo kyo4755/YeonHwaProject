@@ -35,7 +35,7 @@ import java.util.Map;
 
 public class FindDetailReviewActivity extends Fragment{
 
-    TextView pointAvg, review_count;
+    TextView pointAvg, review_count, notReview;
     ImageView star1, star2, star3, star4, star5;
 
     ListView listview;
@@ -60,6 +60,8 @@ public class FindDetailReviewActivity extends Fragment{
         star5 = view.findViewById(R.id.detail_review_star_img_5);
 
         listview = view.findViewById(R.id.detail_review_listview);
+
+        notReview = view.findViewById(R.id.detail_review_not_review);
 
         getPoint();
         createPOJO();
@@ -88,7 +90,7 @@ public class FindDetailReviewActivity extends Fragment{
                         review_count.setText(jsonObject.get("count").toString());
 
                         float point = Float.parseFloat(jsonObject.get("point").toString());
-                        String pointStr = String.format("%.2f", point);
+                        String pointStr = String.format("%.1f", point);
                         pointAvg.setText(pointStr);
 
                         setStarImage(point);
@@ -118,8 +120,11 @@ public class FindDetailReviewActivity extends Fragment{
                     if(result_code.equals("0001")){
                         Toast.makeText(getContext(), "HPID 값이 없습니다.", Toast.LENGTH_SHORT).show();
                     } else if(result_code.equals("0010")){
-                        Toast.makeText(getContext(), "해당 장소의 리뷰가 없습니다.", Toast.LENGTH_SHORT).show();
+                        listview.setVisibility(View.GONE);
+                        notReview.setVisibility(View.VISIBLE);
                     } else {
+                        listview.setVisibility(View.VISIBLE);
+                        notReview.setVisibility(View.GONE);
                         ArrayList<ReviewPOJO> list = new ArrayList<>();
 
                         JSONArray jsonArray = new JSONArray(jsonObject.get("review_list").toString());

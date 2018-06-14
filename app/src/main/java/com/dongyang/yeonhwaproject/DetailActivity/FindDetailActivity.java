@@ -15,6 +15,7 @@ import android.widget.Button;
 
 import com.dongyang.yeonhwaproject.Adapter.FindDetailTabPagerAdapter;
 import com.dongyang.yeonhwaproject.Common.GlobalInfo;
+import com.dongyang.yeonhwaproject.LoginActivity;
 import com.dongyang.yeonhwaproject.R;
 import com.dongyang.yeonhwaproject.ReviewInsertActivity;
 
@@ -103,7 +104,14 @@ public class FindDetailActivity extends AppCompatActivity {
                 }
                 else {
                     Snackbar.make(view, "로그인 후 이용해 주세요.", Snackbar.LENGTH_SHORT)
-                            .setAction("Action", null).show();
+                            .setAction("로그인", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent it = new Intent(FindDetailActivity.this, LoginActivity.class);
+                                    startActivity(it);
+                                    overridePendingTransition(R.anim.right_in_animation, R.anim.not_move_animation);
+                                }
+                            }).show();
                 }
 
             }
