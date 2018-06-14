@@ -46,7 +46,7 @@ public class FindPharmacyActivity extends Fragment{
     LottieAnimationView loadingAnim;
     ListView listView;
 
-    private int pageNo = 0;
+    private int pageNo = 1;
     boolean isLastItemVisible = false;
 
     @Override
@@ -100,17 +100,16 @@ public class FindPharmacyActivity extends Fragment{
         params.put("ServiceKey", GlobalInfo.findPharKey);
 
         if(GlobalInfo.isSettingLocation){
-            params.put("yPos", String.valueOf(GlobalInfo.settingLatitude));
-            params.put("xPos", String.valueOf(GlobalInfo.settingLongitude));
-            params.put("pageNo", pageNo);
+            params.put("WGS84_LON", String.valueOf(GlobalInfo.settingLongitude));
+            params.put("WGS84_LAT", String.valueOf(GlobalInfo.settingLatitude));
         } else {
             GPSInfo gpsInfo = new GPSInfo(getContext());
             if(gpsInfo.isGetLocation()) {
                 double latitude = gpsInfo.getLat();
                 double longitude = gpsInfo.getLon();
 
-                params.put("yPos", String.valueOf(latitude));
-                params.put("xPos", String.valueOf(longitude));
+                params.put("WGS84_LON", String.valueOf(longitude));
+                params.put("WGS84_LAT", String.valueOf(latitude));
             }
         }
 
@@ -157,12 +156,12 @@ public class FindPharmacyActivity extends Fragment{
                             data = new FindPOJO();
                         }
                         else if (startTag.equals("distance"))       current_step = STEP_DIS;
-                        else if (startTag.equals("addr"))       current_step = STEP_ADDR;
-                        else if (startTag.equals("yadmNm"))       current_step = STEP_NAME;
-                        else if (startTag.equals("telno"))       current_step = STEP_TEL;
-                        else if (startTag.equals("xPos"))       current_step = STEP_LAT;
-                        else if (startTag.equals("yPos"))      current_step = STEP_LON;
-                        else if (startTag.equals("ykiho"))           current_step = STEP_HPID;
+                        else if (startTag.equals("dutyAddr"))       current_step = STEP_ADDR;
+                        else if (startTag.equals("dutyName"))       current_step = STEP_NAME;
+                        else if (startTag.equals("dutyTel1"))       current_step = STEP_TEL;
+                        else if (startTag.equals("latitude"))       current_step = STEP_LAT;
+                        else if (startTag.equals("longitude"))      current_step = STEP_LON;
+                        else if (startTag.equals("hpid"))           current_step = STEP_HPID;
                         else                                        current_step = STEP_NONE;
                     }
                     else if (eventType == XmlPullParser.END_TAG) {

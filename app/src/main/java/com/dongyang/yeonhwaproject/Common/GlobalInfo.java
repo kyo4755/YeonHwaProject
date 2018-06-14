@@ -7,11 +7,11 @@ package com.dongyang.yeonhwaproject.Common;
 public class GlobalInfo {
 
     public final static String findHosPharKey = "qykcrKr3huKnjZV66xsvPHACE4seVKMSy6yWtpXPqvEBBWLFqYkzcm7bNXfDdrYs0pZ9uWh%2BlHKwh6pzSNw9Mw%3D%3D";
-    public final static String findHosKey = "qykcrKr3huKnjZV66xsvPHACE4seVKMSy6yWtpXPqvEBBWLFqYkzcm7bNXfDdrYs0pZ9uWh%2BlHKwh6pzSNw9Mw%3D%3D";
-    public final static String findPharKey = "qykcrKr3huKnjZV66xsvPHACE4seVKMSy6yWtpXPqvEBBWLFqYkzcm7bNXfDdrYs0pZ9uWh%2BlHKwh6pzSNw9Mw%3D%3D";
-    public final static String findHosURL = " http://apis.data.go.kr/B551182/hospInfoService/getHospBasisList";
-    public final static String findPharURL = "http://apis.data.go.kr/B551182/pharmacyInfoService/getParmacyBasisList";
-    public final static String findHosPharURL = "http://apis.data.go.kr/B552657/HsptlAsembySearchService/getHsptlMdcncLcinfoInqire";
+    public final static String findHosKey = "nc9Ptte9yJZJH9Mo6xuBpjRVdrxN9fzZCOiHdFaSvnYmnXKayKPXMFZbVFSRQF0akdQb9rL23dIKTN62DXlh8g%3D%3D";
+    public final static String findHosURL = " http://apis.data.go.kr/B552657/HsptlAsembySearchService/getHsptlMdcncLcinfoInqire";
+
+    public final static String findPharKey = "nc9Ptte9yJZJH9Mo6xuBpjRVdrxN9fzZCOiHdFaSvnYmnXKayKPXMFZbVFSRQF0akdQb9rL23dIKTN62DXlh8g%3D%3D";
+    public final static String findPharURL = "http://apis.data.go.kr/B552657/ErmctInsttInfoInqireService/getParmacyLcinfoInqire";
 
     public static boolean isSettingLocation = false;
     public static double settingLatitude, settingLongitude;
