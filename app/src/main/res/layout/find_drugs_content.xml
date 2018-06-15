@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <AutoCompleteTextView
+                android:id="@+id/find_drugs_auto_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/login_edittext_bg"
+                android:completionThreshold="2"
+                android:hint="약 이름을 검색하세요."
+                android:imeOptions="actionDone"
+                android:paddingBottom="15dp"
+                android:paddingEnd="15dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="15dp"
+                android:paddingStart="40dp"
+                android:paddingTop="15dp"
+                android:singleLine="true"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/drugs"
+                app:layout_constraintBottom_toBottomOf="@+id/find_drugs_auto_textview"
+                app:layout_constraintLeft_toLeftOf="@+id/find_drugs_auto_textview"
+                app:layout_constraintTop_toTopOf="@+id/find_drugs_auto_textview"
+                tools:ignore="ContentDescription" />
+
+        </android.support.constraint.ConstraintLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="15dp"
+            android:visibility="gone"
+            android:id="@+id/find_drugs_result_layout">
+
+            <TextView
+                android:id="@+id/find_drugs_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="종근당"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/find_drugs_company"
+                android:text="(주)대명제약" />
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginTop="10dp"
+                android:id="@+id/find_drugs_listview"
+                android:nestedScrollingEnabled="true"
+                android:dividerHeight="20dp"
+                android:divider="#00000000"
+                tools:targetApi="lollipop" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</android.support.v4.widget.NestedScrollView>

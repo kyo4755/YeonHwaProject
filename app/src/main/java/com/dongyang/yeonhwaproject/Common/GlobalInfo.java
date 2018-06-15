@@ -16,7 +16,7 @@ public class GlobalInfo {
     public static boolean isSettingLocation = false;
     public static double settingLatitude, settingLongitude;
 
-    public static final String SERVER_URL = "http://52.79.37.133:10330/";
+    public static final String SERVER_URL = "http://13.125.242.30:10330/";
 
     public static boolean isLogin = false;
     public static String user_id;
@@ -24,4 +24,7 @@ public class GlobalInfo {
     public static String user_phone;
     public static String user_email;
     public static String user_image;
+
+    public static String[] drug_id;
+    public static String[] drug_name;
 }
