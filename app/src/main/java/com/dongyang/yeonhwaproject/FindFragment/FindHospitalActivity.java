@@ -91,7 +91,7 @@ public class FindHospitalActivity extends Fragment{
         pageNo++;
 
         ContentValues params = new ContentValues();
-        params.put("ServiceKey", GlobalInfo.findHosPharKey);
+        params.put("ServiceKey", GlobalInfo.findHosKey);
 
         if(GlobalInfo.isSettingLocation){
             params.put("WGS84_LON", String.valueOf(GlobalInfo.settingLongitude));
@@ -110,7 +110,7 @@ public class FindHospitalActivity extends Fragment{
         params.put("pageNo", pageNo);
         params.put("numOfRows", 10);
 
-        FindHosPharNetworkTask findHosPharNetworkTask = new FindHosPharNetworkTask(GlobalInfo.findHosPharURL, params);
+        FindHosPharNetworkTask findHosPharNetworkTask = new FindHosPharNetworkTask(GlobalInfo.findHosURL, params);
         findHosPharNetworkTask.execute();
     }
 
