@@ -18,23 +18,39 @@
         android:paddingEnd="15dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <EditText
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/default_user"
+            android:id="@+id/setting_profile"
+            android:layout_gravity="start"
+            android:fitsSystemWindows="true"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/setting_tv_id"
+            android:text="아이디"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/setting_profile"/>
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/login_edittext_bg"
             android:hint="아이디 입력"
             android:padding="15dp"
             android:id="@+id/setting_edittext_id"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@+id/setting_tv_id"/>
 
-        <EditText
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/login_edittext_bg"
-            android:hint="비밀번호 입력"
-            android:inputType="textPassword"
-            android:padding="15dp"
-            android:id="@+id/setting_edittext_pw"
+            android:id="@+id/setting_tv_name"
+            android:text="닉네임"
             android:layout_marginTop="10dp"
             app:layout_constraintTop_toBottomOf="@+id/setting_edittext_id"/>
 
@@ -42,12 +58,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/login_edittext_bg"
-            android:hint="비밀번호 다시 입력"
-            android:inputType="textPassword"
+            android:hint="닉네임 입력"
             android:padding="15dp"
-            android:id="@+id/setting_edittext_re_pw"
+            android:id="@+id/setting_edittext_name"
+            app:layout_constraintTop_toBottomOf="@+id/setting_tv_name"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="이메일"
+            android:id="@+id/setting_tv_email"
             android:layout_marginTop="10dp"
-            app:layout_constraintTop_toBottomOf="@+id/setting_edittext_pw"/>
+            app:layout_constraintTop_toBottomOf="@id/setting_edittext_name"/>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -55,8 +78,7 @@
             android:orientation="horizontal"
             android:id="@+id/setting_email_layout"
             android:gravity="center_vertical"
-            android:layout_marginTop="10dp"
-            app:layout_constraintTop_toBottomOf="@+id/setting_edittext_re_pw">
+            app:layout_constraintTop_toBottomOf="@+id/setting_tv_email">
 
             <EditText
                 android:layout_width="0dp"
@@ -79,15 +101,22 @@
 
         </LinearLayout>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="전화번호"
+            android:id="@+id/setting_tv_phone"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/setting_email_layout"/>
+
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/login_edittext_bg"
-            android:hint="주소 입력"
+            android:hint="전화번호 입력"
             android:padding="15dp"
-            android:id="@+id/setting_edittext_address"
-            android:layout_marginTop="10dp"
-            app:layout_constraintTop_toBottomOf="@+id/setting_email_layout"/>
+            android:id="@+id/setting_edittext_phone"
+            app:layout_constraintTop_toBottomOf="@+id/setting_tv_phone"/>
 
         <Button
             android:layout_width="match_parent"
@@ -99,8 +128,22 @@
             android:textSize="15sp"
             android:padding="15dp"
             android:background="@drawable/login_btn_bg"
-            android:layout_marginTop="10dp"
-            app:layout_constraintTop_toBottomOf="@id/setting_edittext_address"/>
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@id/setting_edittext_phone"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/setting_pw"
+            android:text="비밀번호 변경"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:padding="15dp"
+            android:background="@drawable/login_pw_btn_bg"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintTop_toBottomOf="@id/setting_btn"/>
 
     </android.support.constraint.ConstraintLayout>
 

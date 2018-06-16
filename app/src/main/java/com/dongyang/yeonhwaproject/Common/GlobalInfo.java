@@ -16,7 +16,7 @@ public class GlobalInfo {
     public static boolean isSettingLocation = false;
     public static double settingLatitude, settingLongitude;
 
-    public static final String SERVER_URL = "http://13.125.242.30:10330/";
+    public static final String SERVER_URL = "http://13.125.250.63:10330/";
 
     public static boolean isLogin = false;
     public static String user_id;
