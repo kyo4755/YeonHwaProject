@@ -105,6 +105,16 @@
             android:text="010-5269-4773"
             android:textSize="10sp"/>
 
+        <TextView
+            android:id="@+id/drawer_logout_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginStart="12dp"
+            android:background="@drawable/drawer_btn_bg"
+            android:text="로그아웃"
+            android:textSize="10sp"/>
+
     </LinearLayout>
 
     <ImageView

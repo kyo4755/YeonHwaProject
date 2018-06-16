@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.dongyang.yeonhwaproject.Common.GlobalInfo;
+import com.dongyang.yeonhwaproject.DetailActivity.FindDetailActivity;
 import com.dongyang.yeonhwaproject.FindFragment.FindDrugsActivity;
 import com.dongyang.yeonhwaproject.FindFragment.FindHospitalActivity;
 import com.dongyang.yeonhwaproject.FindFragment.FindPharmacyActivity;
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity
     public RequestManager glideManager;
 
     LinearLayout findHospital, findPharmacy, findDrugs, settings;
-    TextView login_btn, register_btn;
+    TextView login_btn, register_btn,logout_btn;
 
     LinearLayout beforeLogin, afterLogin;
     TextView drawerNickname, drawerEmail, drawerPhone;
@@ -92,6 +93,7 @@ public class MainActivity extends AppCompatActivity
 
         login_btn = header.findViewById(R.id.drawer_login_btn);
         register_btn = header.findViewById(R.id.drawer_register_btn);
+        logout_btn = header.findViewById(R.id.drawer_logout_btn);
 
         findHospital.setOnClickListener(this);
         findPharmacy.setOnClickListener(this);
@@ -100,6 +102,7 @@ public class MainActivity extends AppCompatActivity
 
         login_btn.setOnClickListener(this);
         register_btn.setOnClickListener(this);
+        logout_btn.setOnClickListener(this);
     }
 
     @Override
@@ -207,13 +210,28 @@ public class MainActivity extends AppCompatActivity
                 findDrugsClickListener();
                 break;
             case R.id.main_settings :
-                SettingsClickListener();
+                if(GlobalInfo.isLogin){
+                    SettingsClickListener();
+                }else{
+                    Snackbar.make(v, "로그인 후 이용해 주세요.", Snackbar.LENGTH_SHORT)
+                            .setAction("로그인", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent it = new Intent(MainActivity.this, LoginActivity.class);
+                                    startActivity(it);
+                                    overridePendingTransition(R.anim.right_in_animation, R.anim.not_move_animation);
+                                }
+                            }).show();
+                }
                 break;
             case R.id.drawer_login_btn:
                 LoginBtnClickListener();
                 break;
             case R.id.drawer_register_btn:
                 RegisterBtnClickListener();
+                break;
+            case R.id.drawer_logout_btn:
+                LogoutBtnClickListener();
                 break;
         }
         overridePendingTransition(R.anim.right_in_animation, R.anim.not_move_animation);
@@ -239,6 +257,7 @@ public class MainActivity extends AppCompatActivity
     private void SettingsClickListener() {
         Intent it = new Intent(MainActivity.this, SettingActivity.class);
         startActivity(it);
+
     }
 
     private void LoginBtnClickListener(){
@@ -250,6 +269,12 @@ public class MainActivity extends AppCompatActivity
     private void RegisterBtnClickListener(){
         Intent it = new Intent(MainActivity.this, RegisterActivity.class);
         startActivity(it);
+        drawer.closeDrawer(GravityCompat.START);
+    }
+
+    private void LogoutBtnClickListener(){
+        GlobalInfo.isLogin = false;
+
         drawer.closeDrawer(GravityCompat.START);
     }
 }
