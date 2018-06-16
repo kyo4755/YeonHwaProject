@@ -121,9 +121,7 @@
             android:id="@+id/detail_review_listview"
             android:nestedScrollingEnabled="true"
             android:background="@drawable/login_edittext_bg"
-            tools:targetApi="lollipop">
-
-        </ListView>
+            tools:targetApi="lollipop"/>
 
         <TextView
             android:layout_width="match_parent"

@@ -26,8 +26,8 @@ public class FindMainAdapter extends BaseAdapter {
     private ArrayList<FindPOJO> list;
 
     private class FindMainViewHolder{
-        ImageView img;
         ImageView star_img;
+        TextView star_result;
         TextView name;
         TextView review_count;
         TextView distance;
@@ -64,8 +64,8 @@ public class FindMainAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.find_prefab, parent, false);
 
             holder = new FindMainViewHolder();
-            holder.img = convertView.findViewById(R.id.prefab_find_image);
             holder.name = convertView.findViewById(R.id.prefab_name);
+            holder.star_result = convertView.findViewById(R.id.prefab_star_result);
             holder.star_img = convertView.findViewById(R.id.prefab_star_image);
             holder.review_count = convertView.findViewById(R.id.prefab_review_count);
             holder.distance = convertView.findViewById(R.id.prefab_distance);
@@ -83,13 +83,10 @@ public class FindMainAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, FindDetailActivity.class);
-
-                intent.putExtra("prefab_name", pojo.getName());
-                intent.putExtra("prefab_address", pojo.getAddress());
-                intent.putExtra("prefab_tel", pojo.getTel());
-                intent.putExtra("x_lat", pojo.getLat());
-                intent.putExtra("y_lon", pojo.getLon());
                 intent.putExtra("hpid", pojo.getHpid());
+                intent.putExtra("prefab_name", pojo.getName());
+                intent.putExtra("ishosphar", pojo.getIsHosPhar());
+                intent.putExtra("prefab_tel", pojo.getTel());
                 context.startActivity(intent);
             }
         });
@@ -104,11 +101,15 @@ public class FindMainAdapter extends BaseAdapter {
         holder.distance.setText(distanceStr);
 
         Drawable star_img;
-        if(pojo.getIs_review_in())
+
+        if(Float.parseFloat(pojo.getAvg_point()) != 0.0f){
             star_img = context.getResources().getDrawable(R.drawable.star_color);
-        else
+        }else{
             star_img = context.getResources().getDrawable(R.drawable.star_noncolor);
+        }
+
         holder.star_img.setImageDrawable(star_img);
+        holder.star_result.setText(pojo.getAvg_point());
 
         return convertView;
     }

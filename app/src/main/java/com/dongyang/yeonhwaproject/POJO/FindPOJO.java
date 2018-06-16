@@ -13,7 +13,24 @@ public class FindPOJO {
     private String lat = "127";
     private String lon = "31";
     private String hpid = "111";
-    private boolean is_review_in = false;
+    private String avg_point = "0.0";
+    private String isHosPhar;
+
+    public String getIsHosPhar() {
+        return isHosPhar;
+    }
+
+    public void setIsHosPhar(String isHosPhar) {
+        this.isHosPhar = isHosPhar;
+    }
+
+    public String getAvg_point() {
+        return avg_point;
+    }
+
+    public void setAvg_point(String avg_point) {
+        this.avg_point = avg_point;
+    }
 
     public String getHpid() {
         return hpid;
@@ -39,10 +56,6 @@ public class FindPOJO {
         this.lon = lon;
     }
 
-    public boolean isIs_review_in() {
-        return is_review_in;
-    }
-
     public String getReview_count() {
         return review_count;
     }
@@ -57,14 +70,6 @@ public class FindPOJO {
 
     public void setDistance(String distance) {
         this.distance = distance;
-    }
-
-    public boolean getIs_review_in() {
-        return is_review_in;
-    }
-
-    public void setIs_review_in(boolean is_review_in) {
-        this.is_review_in = is_review_in;
     }
 
     public String getName() {

@@ -1,5 +1,6 @@
 package com.dongyang.yeonhwaproject.DetailActivity;
 
+import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.net.Uri;
@@ -10,9 +11,12 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.dongyang.yeonhwaproject.Adapter.FindDetailTabPagerAdapter;
 import com.dongyang.yeonhwaproject.Common.GlobalInfo;
 import com.dongyang.yeonhwaproject.LoginActivity;
@@ -28,21 +32,24 @@ public class FindDetailActivity extends AppCompatActivity {
     private ViewPager viewPager;
 
     Button detail_toolbar_call;
+    static ImageView upper_image;
 
     String hpid;
+
+    public static Activity findDetailActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail_find_main);
 
+        findDetailActivity = this;
+
         Toolbar toolbar = findViewById(R.id.detail_toolbar);
 
         Intent intent = getIntent();
         toolbar.setTitle(intent.getStringExtra("prefab_name"));
         hpid = intent.getStringExtra("hpid");
-
-        toolbar.setTitleTextColor(getResources().getColor(R.color.black));
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -88,6 +95,7 @@ public class FindDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = getIntent();
+                Log.e("tel", intent.getStringExtra("prefab_tel"));
                 startActivity(new Intent("android.intent.action.DIAL", Uri.parse("tel:"+intent.getStringExtra("prefab_tel"))));
             }
         });
@@ -116,6 +124,8 @@ public class FindDetailActivity extends AppCompatActivity {
 
             }
         });
+
+        upper_image = findViewById(R.id.detail_toolbar_img);
     }
 
     @Override
@@ -126,6 +136,13 @@ public class FindDetailActivity extends AppCompatActivity {
     private void finishActivity() {
         finish();
         overridePendingTransition(R.anim.not_move_animation, R.anim.right_out_animation);
+    }
+
+    public static void setImage(String url){
+        Glide.with(findDetailActivity)
+                .load(url)
+                .error(R.drawable.temp_hospital)
+                .into(upper_image);
     }
 
 }

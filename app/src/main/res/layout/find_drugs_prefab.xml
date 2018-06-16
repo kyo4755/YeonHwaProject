@@ -34,6 +34,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/find_drugs_prefab_msg"
         android:layout_marginTop="5dp"
-        android:text="여기는 설명"/>
+        android:text="여기는 설명" />
 
 </LinearLayout>
