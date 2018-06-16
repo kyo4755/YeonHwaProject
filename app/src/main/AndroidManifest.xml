@@ -75,6 +75,10 @@
             android:name=".ReviewInsertActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
+        <activity
+            android:name=".SettingPasswdActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
     </application>
 
 </manifest>

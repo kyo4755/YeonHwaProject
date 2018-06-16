@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.dongyang.yeonhwaproject.Common.GlobalInfo;
 import com.dongyang.yeonhwaproject.DetailActivity.FindDetailActivity;
 import com.dongyang.yeonhwaproject.MainActivity;
 import com.dongyang.yeonhwaproject.POJO.FindPOJO;
@@ -103,7 +104,7 @@ public class DetailReviewAdapter extends BaseAdapter {
                     .bitmapTransform(new CropCircleTransformation(context))
                     .into(holder.img);
         } else {
-            String url = "" + data.getImg();
+            String url = GlobalInfo.SERVER_URL + "users/getPhoto?id=" + data.getImg();
             Glide.with(context)
                     .load(url)
                     .centerCrop()
