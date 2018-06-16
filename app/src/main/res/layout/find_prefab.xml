@@ -8,15 +8,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/prefab">
 
-    <ImageView
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:id="@+id/prefab_find_image"
-        android:background="@drawable/find_location"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:ignore="ContentDescription" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -24,8 +15,7 @@
         android:orientation="vertical"
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
-        app:layout_constraintLeft_toRightOf="@id/prefab_find_image"
-        app:layout_constraintTop_toTopOf="@id/prefab_find_image">
+        app:layout_constraintLeft_toLeftOf="parent">
 
         <TextView
             android:layout_width="wrap_content"
