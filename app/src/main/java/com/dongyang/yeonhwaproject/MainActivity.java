@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity
 
     LinearLayout findHospital, findPharmacy, findDrugs, settings;
     TextView login_btn, register_btn,logout_btn;
+    ImageButton main_find_btn;
 
     LinearLayout beforeLogin, afterLogin;
     TextView drawerNickname, drawerEmail, drawerPhone;
@@ -81,7 +83,14 @@ public class MainActivity extends AppCompatActivity
 
         drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
+
+            @Override
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                setLoginStatus();
+            }
+        };
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -90,6 +99,7 @@ public class MainActivity extends AppCompatActivity
         findPharmacy = findViewById(R.id.main_find_pharmacy);
         findDrugs = findViewById(R.id.main_find_drugs);
         settings = findViewById(R.id.main_settings);
+        main_find_btn = findViewById(R.id.main_find_btn);
 
         login_btn = header.findViewById(R.id.drawer_login_btn);
         register_btn = header.findViewById(R.id.drawer_register_btn);
@@ -99,6 +109,7 @@ public class MainActivity extends AppCompatActivity
         findPharmacy.setOnClickListener(this);
         findDrugs.setOnClickListener(this);
         settings.setOnClickListener(this);
+        main_find_btn.setOnClickListener(this);
 
         login_btn.setOnClickListener(this);
         register_btn.setOnClickListener(this);
@@ -117,35 +128,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onResume() {
         super.onResume();
-        if(GlobalInfo.isLogin){
-            beforeLogin.setVisibility(View.GONE);
-            afterLogin.setVisibility(View.VISIBLE);
-            drawerNickname.setText(GlobalInfo.user_name);
-            drawerEmail.setText(GlobalInfo.user_email);
-            drawerPhone.setText(GlobalInfo.user_phone);
-
-            if(GlobalInfo.user_image.equals("null")){
-                glideManager.load(R.drawable.default_user)
-                        .centerCrop()
-                        .bitmapTransform(new CropCircleTransformation(MainActivity.this))
-                        .into(drawerImage);
-            } else {
-                String img_url = GlobalInfo.SERVER_URL + "users/getPhoto?id=" + GlobalInfo.user_image;
-                glideManager.load(img_url)
-                        .centerCrop()
-                        .bitmapTransform(new CropCircleTransformation(MainActivity.this))
-                        .into(drawerImage);
-            }
-        }
-        else {
-            beforeLogin.setVisibility(View.VISIBLE);
-            afterLogin.setVisibility(View.GONE);
-
-            glideManager.load(R.drawable.default_user)
-                    .centerCrop()
-                    .bitmapTransform(new CropCircleTransformation(MainActivity.this))
-                    .into(drawerImage);
-        }
+        setLoginStatus();
     }
 
     @Override
@@ -233,8 +216,17 @@ public class MainActivity extends AppCompatActivity
             case R.id.drawer_logout_btn:
                 LogoutBtnClickListener();
                 break;
+            case R.id.main_find_btn:
+                SearchBtnClickListener();
+                break;
+
         }
         overridePendingTransition(R.anim.right_in_animation, R.anim.not_move_animation);
+    }
+
+    private void SearchBtnClickListener() {
+        Intent it = new Intent(MainActivity.this, SearchActivity.class);
+        startActivity(it);
     }
 
     private void findHospitalClickListener() {
@@ -274,7 +266,40 @@ public class MainActivity extends AppCompatActivity
 
     private void LogoutBtnClickListener(){
         GlobalInfo.isLogin = false;
-
         drawer.closeDrawer(GravityCompat.START);
+    }
+
+    private void setLoginStatus() {
+        if (GlobalInfo.isLogin) {
+
+            beforeLogin.setVisibility(View.GONE);
+            afterLogin.setVisibility(View.VISIBLE);
+            drawerNickname.setText(GlobalInfo.user_name);
+            drawerEmail.setText(GlobalInfo.user_email);
+            drawerPhone.setText(GlobalInfo.user_phone);
+
+            if (GlobalInfo.user_image.equals("null")) {
+                glideManager.load(R.drawable.default_user)
+                        .centerCrop()
+                        .bitmapTransform(new CropCircleTransformation(MainActivity.this))
+                        .into(drawerImage);
+            } else {
+                String img_url = GlobalInfo.SERVER_URL + "users/getPhoto?id=" + GlobalInfo.user_image;
+                glideManager.load(img_url)
+                        .centerCrop()
+                        .bitmapTransform(new CropCircleTransformation(MainActivity.this))
+                        .into(drawerImage);
+            }
+
+        } else {
+            beforeLogin.setVisibility(View.VISIBLE);
+            afterLogin.setVisibility(View.GONE);
+
+            glideManager.load(R.drawable.default_user)
+                    .centerCrop()
+                    .bitmapTransform(new CropCircleTransformation(MainActivity.this))
+                    .into(drawerImage);
+
+        }
     }
 }

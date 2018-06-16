@@ -39,6 +39,8 @@ public class FindActivity extends AppCompatActivity implements View.OnClickListe
 
     public static Activity findActivity;
 
+    ImageButton find_building;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +91,9 @@ public class FindActivity extends AppCompatActivity implements View.OnClickListe
         LinearLayout findLocation = findViewById(R.id.find_my_location);
         findLocation.setOnClickListener(this);
 
+        find_building = findViewById(R.id.find_building);
+        find_building.setOnClickListener(this);
+
         findLocation();
 
     }
@@ -102,7 +107,15 @@ public class FindActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.find_my_location :
                 moveSettingLocationActivity();
                 break;
+            case R.id.find_building:
+                SearchBtnClickListener();
+                break;
         }
+    }
+
+    private void SearchBtnClickListener() {
+        Intent it = new Intent(FindActivity.this, SearchActivity.class);
+        startActivity(it);
     }
 
     @Override

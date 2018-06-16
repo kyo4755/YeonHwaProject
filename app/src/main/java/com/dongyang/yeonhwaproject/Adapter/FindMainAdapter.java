@@ -31,6 +31,7 @@ public class FindMainAdapter extends BaseAdapter {
         TextView name;
         TextView review_count;
         TextView distance;
+        TextView address;
         ConstraintLayout prefab;
     }
 
@@ -70,6 +71,7 @@ public class FindMainAdapter extends BaseAdapter {
             holder.review_count = convertView.findViewById(R.id.prefab_review_count);
             holder.distance = convertView.findViewById(R.id.prefab_distance);
             holder.prefab  = convertView.findViewById(R.id.prefab);
+            holder.address = convertView.findViewById(R.id.prefab_address);
 
             convertView.setTag(holder);
         }
@@ -93,12 +95,17 @@ public class FindMainAdapter extends BaseAdapter {
 
         holder.name.setText(pojo.getName());
         holder.review_count.setText(pojo.getReview_count());
+        holder.address.setText(pojo.getAddress());
 
-        float distanceFloat = Float.parseFloat(pojo.getDistance());
-        String distanceStr;
-        if(distanceFloat < 1)   distanceStr = String.valueOf((int)(distanceFloat * 1000)) + "m";
-        else                    distanceStr = distanceFloat + "km";
-        holder.distance.setText(distanceStr);
+        if(pojo.getDistance() != null){
+            float distanceFloat = Float.parseFloat(pojo.getDistance());
+            String distanceStr;
+            if(distanceFloat < 1)   distanceStr = String.valueOf((int)(distanceFloat * 1000)) + "m";
+            else                    distanceStr = distanceFloat + "km";
+            holder.distance.setText(distanceStr);
+        } else {
+            holder.distance.setVisibility(View.GONE);
+        }
 
         Drawable star_img;
 
