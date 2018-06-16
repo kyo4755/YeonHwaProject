@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:fillViewport="true"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="15dp"
+        android:paddingStart="15dp"
+        android:paddingRight="15dp"
+        android:paddingEnd="15dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/setting_tv_pw"
+            android:text="현재 비밀번호"
+            android:layout_marginTop="10dp"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/login_edittext_bg"
+            android:padding="15dp"
+            android:id="@+id/setting_old_pw"
+            app:layout_constraintTop_toBottomOf="@+id/setting_tv_pw"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/setting_tv_old_pw"
+            android:text="변경 할 비밀번호"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/setting_old_pw"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/login_edittext_bg"
+            android:padding="15dp"
+            android:id="@+id/setting_new_pw"
+            app:layout_constraintTop_toBottomOf="@+id/setting_tv_old_pw"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="비밀번호 확인"
+            android:id="@+id/setting_tv_re_pw"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/setting_new_pw"/>
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/login_edittext_bg"
+            android:padding="15dp"
+            android:id="@+id/setting_re_pw"
+            app:layout_constraintTop_toBottomOf="@+id/setting_tv_re_pw"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/setting_pw_btn"
+            android:text="수정하기"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:padding="15dp"
+            android:background="@drawable/login_btn_bg"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@id/setting_re_pw"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.v4.widget.NestedScrollView>
+
