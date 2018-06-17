@@ -121,7 +121,7 @@ public class SplashActivity extends AppCompatActivity {
                             }
                         }
                     } catch (JSONException e) {
-                        e.printStackTrace();
+                        Toast.makeText(SplashActivity.this, "서버와의 통신이 원할하지 않습니다.", Toast.LENGTH_SHORT).show();
                     } finally {
                         loadingAnim.setVisibility(View.GONE);
                         loadingAnim.pauseAnimation();

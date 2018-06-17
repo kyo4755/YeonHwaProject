@@ -170,7 +170,11 @@ public class MainActivity extends AppCompatActivity
                 findDrugsClickListener();
                 break;
             case R.id.menu_setting :
-                SettingsClickListener();
+                if(GlobalInfo.isLogin){
+                    SettingsClickListener();
+                }else{
+                    Toast.makeText(MainActivity.this, "로그인 후 이용해 주세요", Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
         overridePendingTransition(R.anim.right_in_animation, R.anim.not_move_animation);
